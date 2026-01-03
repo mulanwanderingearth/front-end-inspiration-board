@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import './Board.css';
 import Card from './Card.jsx';
 
-const Board = () => {
+const Board = ({cards,onToggleLikes,onDeleteCard}) => {
 
     const getAllCardsforABoard = (cards) =>{
         return cards.map((card) =>{

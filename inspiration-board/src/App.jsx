@@ -28,12 +28,21 @@ const exampleCardList = [
 
 function App() {
   const [board, setBoard] = useState(exampleBoard);
+  const [cardsList, setCardsList] = useState(exampleCardList);
 
-  console.log(board.boardTitle);
   
   const addNewBoard=(boardData) =>{
   setBoard([...board,boardData]);
 }
+
+
+
+
+  //board display cards functions
+  const pressLikes =()=>{};
+
+  const deleteCard =()=>{};
+
   return (
         <div className="App">
       <header className="App-header">
