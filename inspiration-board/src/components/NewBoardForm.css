@@ -1,0 +1,7 @@
+.form-visible {
+  display: block;
+}
+
+.form-hidden {
+  display: none;
+}

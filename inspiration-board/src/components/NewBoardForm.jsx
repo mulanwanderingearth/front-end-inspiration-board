@@ -8,6 +8,7 @@ const NewBoardForm = ({ onNewBoard }) => {
     ownerName: ''
   });
 
+  const [showForm, setShowForm] = useState(true);
   const handleChange = (event) => {
     setBoardData({ ...boardData, [event.target.name]: event.target.value })
   };
@@ -19,17 +20,22 @@ const NewBoardForm = ({ onNewBoard }) => {
       ownerName: ''
     });
   };
+  const handleHideForm = () => {
+    setShowForm(!showForm);
+  };
+  
   return (
     <form onSubmit={handleSubmit}>
       <h1>CREAT A NEW BOARD</h1>
-
-      <label htmlFor="title">Title</label>
-      <input id="title" name="title" value={boardData.title} onChange={handleChange} />
-      <label htmlFor="ownerNmae">Owner's Name</label>
-      <input id="ownerName" name="ownerName" value={boardData.ownerName} onChange={handleChange} />
-      <p>Preview:{boardData.title}-{boardData.ownerName}</p>
-      <input type="submit" value="Add Board" />
-      <button>Hide New Board Form</button>
+      <div className={showForm?'form-visible':'form-hidden'}>
+        <label htmlFor="title">Title</label>
+        <input id="title" name="title" value={boardData.title} onChange={handleChange} />
+        <label htmlFor="ownerNmae">Owner's Name</label>
+        <input id="ownerName" name="ownerName" value={boardData.ownerName} onChange={handleChange} />
+        <p>Preview:{boardData.title}-{boardData.ownerName}</p>
+        <input type="submit" value="Add Board" />
+      </div>
+      <button onClick={handleHideForm}>{showForm ? 'Hide New Board Form' : 'Show New Board'}</button>
 
     </form>
 
