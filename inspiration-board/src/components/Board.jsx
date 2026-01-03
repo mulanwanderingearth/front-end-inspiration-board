@@ -8,9 +8,9 @@ const Board = () => {
         return cards.map((card) =>{
             return (
                 <Card
-                id = {card.id}
-                cardMessage= {card.card_message}
-                likes = {card.likes}
+                id = {card.cardId}
+                cardMessage= {card.cardMessage}
+                likes = {card.cardLikes}
                 onToggleLikes={onToggleLikes}
                 onDeleteCard={onDeleteCard}/>
             );
@@ -27,9 +27,9 @@ const Board = () => {
 Board.propTypes = {
     cards:PropTypes.arrayof(
         PropTypes.shape({
-            id: PropTypes.number.isRequired,
+            cardId: PropTypes.number.isRequired,
             cardMessage: PropTypes.string.isRequired,
-            likes: PropTypes.number.isRequired,
+            cardLikes: PropTypes.number.isRequired,
         })
     ).isRequired,
     onToggleLikes: PropTypes.func.isRequired,
