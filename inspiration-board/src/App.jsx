@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import './App.css'
 import SelectedBoard from './components/SelectedBoard'
+import Board from './components/Board';
+
 import NewBoardForm from './components/NewBoardForm';
 import NewCardForm from './components/NewCardForm';
 //example board and card
@@ -10,16 +12,24 @@ const exampleBoard = {
   ownerName: 'Terry Pratchett',
 };
 
-const exampleCard = {
+const exampleCardList = [
+{
   cardMessageid: 1024,
   cardMessage:'a good bookshop is just a genteel Black Hole that knows how to read',
   cardLikes: 512,
-};
+},
+{
+  cardMessageid: 1025,
+  cardMessage:'Knowledge = power = energy = matter = mass',
+  cardLikes: 513,
+}
 
+];
 
 
 function App() {
   const [board, setBoard] = useState(exampleBoard);
+  const [cardsList, setCardsList] = useState(exampleCardList);
 
   console.log(board.boardTitle);
 
@@ -32,6 +42,19 @@ function App() {
     setCards([...cards,cardData]);
 
   };
+  
+  const addNewBoard=(boardData) =>{
+  setBoard([...board,boardData]);
+}
+
+
+
+
+  //board display cards functions
+  const pressLikes =()=>{};
+
+  const deleteCard =()=>{};
+
   return (
         <div className="App">
       <header className="App-header">
@@ -40,7 +63,9 @@ function App() {
       <main>
         <div>
           <SelectedBoard 
-          boardTitle = {board.boardTitle}/>
+            boardTitle={board.boardTitle} 
+            author={board.ownerName} 
+          />
         </div>
         <div>
           
@@ -48,6 +73,11 @@ function App() {
 
         </div>
         <div>
+          <Board 
+          cards={cardsList}
+          onToggleLikes={pressLikes}
+          onDeleteCard={deleteCard}
+          />
           <h2 className='cardList'> Inspiration Cards</h2>
         </div>
           <div>
