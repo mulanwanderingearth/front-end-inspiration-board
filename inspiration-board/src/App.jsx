@@ -33,21 +33,17 @@ function App() {
 
   console.log(board.boardTitle);
 
+
   const[boards,setBoards]=useState([]);
   const[cards, setCards] =useState([]);
   const addNewBoard=(boardData) =>{
-  setBoards([...boards,boardData]);
-};
+    setBoards([...boards,boardData]);
+  };
   const addNewCard=(cardData)=>{
     setCards([...cards,cardData]);
 
   };
   
-  const addNewBoard=(boardData) =>{
-  setBoard([...board,boardData]);
-}
-
-
 
 
   //board display cards functions

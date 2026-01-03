@@ -25,7 +25,7 @@ const Board = ({cards,onToggleLikes,onDeleteCard}) => {
 };
 
 Board.propTypes = {
-    cards:PropTypes.arrayof(
+    cards:PropTypes.arrayOf(
         PropTypes.shape({
             cardId: PropTypes.number.isRequired,
             cardMessage: PropTypes.string.isRequired,
