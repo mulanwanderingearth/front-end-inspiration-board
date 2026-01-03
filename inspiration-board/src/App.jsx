@@ -1,9 +1,14 @@
 import { useState } from 'react'
 import './App.css'
+import NewBoardForm from './components/NewBoardForm'
+
 
 function App() {
- 
+  const [boards, setBoards]=useState([])
+  const addNewBoard=(boardData)=>{
+  setBoards([...boards,boardData]);
 
+}
   return (
         <div className="App">
       <header className="App-header">
@@ -11,22 +16,24 @@ function App() {
       </header>
       <main>
         <div>
-          <h2 className='Selected_board'>Selected Boards</h2>
+          <h2 className='selectedBoard'>Selected Boards</h2>
         </div>
         <div>
-          <h2 className='Board_selection'>Boards</h2>
+          <h2 className='boardSelection'>Boards</h2>
         </div>
         <div>
-          <h2 className='Create_board'> Create A New Board</h2>
+          <h2 className='createBoard'> Create A New Board</h2>
+          <NewBoardForm onNewBoard={addNewBoard}/>
+
         </div>
         <div>
-          <h2 className='Card_list'> Inspiration Cards</h2>
+          <h2 className='cardList'> Inspiration Cards</h2>
         </div>
           <div>
-          <h2 className='Create_card'> Create A New Card</h2>
+          <h2 className='createCard'> Create A New Card</h2>
         </div>
         <div>
-          <h2 className='AI'> Get Inspired </h2>
+          <h2 className='ai'> Get Inspired </h2>
         </div>
       </main>
     </div>
