@@ -1,13 +1,29 @@
 import { useState } from 'react'
 import './App.css'
-import NewBoardForm from './components/NewBoardForm'
+import SelectedBoard from './components/SelectedBoard'
+import NewBoardForm from './components/NewBoardForm';
+//example board and card
+const exampleBoard = { 
+	boardId: 2048,
+	boardTitle: 'Guards! Guards!',
+  ownerNname: 'Terry Pratchett',
+};
+
+const exampleCard = {
+  cardMessageid: 1024,
+  cardMessage:'a good bookshop is just a genteel Black Hole that knows how to read',
+  cardLikes: 512,
+};
+
 
 
 function App() {
-  const [boards, setBoards]=useState([])
-  const addNewBoard=(boardData)=>{
-  setBoards([...boards,boardData]);
+  const [board, setBoard] = useState(exampleBoard);
 
+  console.log(board.boardTitle);
+  
+  const addNewBoard=(boardData) =>{
+  setBoard([...board,boardData]);
 }
   return (
         <div className="App">
@@ -16,10 +32,8 @@ function App() {
       </header>
       <main>
         <div>
-          <h2 className='selectedBoard'>Selected Boards</h2>
-        </div>
-        <div>
-          <h2 className='boardSelection'>Boards</h2>
+          <SelectedBoard 
+          boardTitle = {board.boardTitle}/>
         </div>
         <div>
           <h2 className='createBoard'> Create A New Board</h2>
@@ -39,5 +53,4 @@ function App() {
     </div>
   )
 }
-
 export default App
