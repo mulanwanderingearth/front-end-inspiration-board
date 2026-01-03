@@ -2,11 +2,12 @@ import { useState } from 'react'
 import './App.css'
 import SelectedBoard from './components/SelectedBoard'
 import NewBoardForm from './components/NewBoardForm';
+import NewCardForm from './components/NewCardForm';
 //example board and card
 const exampleBoard = { 
 	boardId: 2048,
 	boardTitle: 'Guards! Guards!',
-  ownerNname: 'Terry Pratchett',
+  ownerName: 'Terry Pratchett',
 };
 
 const exampleCard = {
@@ -21,10 +22,16 @@ function App() {
   const [board, setBoard] = useState(exampleBoard);
 
   console.log(board.boardTitle);
-  
+
+  const[boards,setBoards]=useState([]);
+  const[cards, setCards] =useState([]);
   const addNewBoard=(boardData) =>{
-  setBoard([...board,boardData]);
-}
+  setBoards([...boards,boardData]);
+};
+  const addNewCard=(cardData)=>{
+    setCards([...cards,cardData]);
+
+  };
   return (
         <div className="App">
       <header className="App-header">
@@ -36,7 +43,7 @@ function App() {
           boardTitle = {board.boardTitle}/>
         </div>
         <div>
-          <h2 className='createBoard'> Create A New Board</h2>
+          
           <NewBoardForm onNewBoard={addNewBoard}/>
 
         </div>
@@ -44,7 +51,8 @@ function App() {
           <h2 className='cardList'> Inspiration Cards</h2>
         </div>
           <div>
-          <h2 className='createCard'> Create A New Card</h2>
+          {/* <h2 className='createCard'> Create A New Card</h2> */}
+          <NewCardForm onNewCard = {addNewCard} />
         </div>
         <div>
           <h2 className='ai'> Get Inspired </h2>
