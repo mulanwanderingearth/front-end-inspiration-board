@@ -1,26 +1,41 @@
 import { useState } from 'react'
 import './App.css'
 import SelectedBoard from './components/SelectedBoard'
+import Board from './components/Board';
 
 //example board and card
 const exampleBoard = { 
 	boardId: 2048,
 	boardTitle: 'Guards! Guards!',
-  ownerNname: 'Terry Pratchett',
+  ownerName: 'Terry Pratchett',
 };
 
-const exampleCard = {
+const exampleCardList = [
+{
   cardMessageid: 1024,
   cardMessage:'a good bookshop is just a genteel Black Hole that knows how to read',
   cardLikes: 512,
-};
+},
+{
+  cardMessageid: 1025,
+  cardMessage:'Knowledge = power = energy = matter = mass',
+  cardLikes: 513,
+}
 
+];
 
 
 function App() {
   const [board, setBoard] = useState(exampleBoard);
+  const[cardsList,setCardsList] = useState(exampleCardList);
 
-  console.log(board.boardTitle);
+
+
+
+  //board display cards functions
+  const pressLikes =()=>{};
+
+  const deleteCard =()=>{};
 
   return (
         <div className="App">
@@ -30,13 +45,19 @@ function App() {
       <main>
         <div>
           <SelectedBoard 
-          boardTitle = {board.boardTitle}/>
+            boardTitle={board.boardTitle} 
+            author={board.ownerName} 
+          />
         </div>
         <div>
           <h2 className='Create_board'> Create A New Board</h2>
         </div>
         <div>
-          <h2 className='Card_list'> Inspiration Cards</h2>
+          <Board 
+          cards={cardsList}
+          onToggleLikes={pressLikes}
+          onDeleteCard={deleteCard}
+          />
         </div>
           <div>
           <h2 className='Create_card'> Create A New Card</h2>
