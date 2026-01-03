@@ -3,6 +3,7 @@ import './App.css'
 import SelectedBoard from './components/SelectedBoard'
 import Board from './components/Board';
 
+import NewBoardForm from './components/NewBoardForm';
 //example board and card
 const exampleBoard = { 
 	boardId: 2048,
@@ -27,16 +28,12 @@ const exampleCardList = [
 
 function App() {
   const [board, setBoard] = useState(exampleBoard);
-  const[cardsList,setCardsList] = useState(exampleCardList);
 
-
-
-
-  //board display cards functions
-  const pressLikes =()=>{};
-
-  const deleteCard =()=>{};
-
+  console.log(board.boardTitle);
+  
+  const addNewBoard=(boardData) =>{
+  setBoard([...board,boardData]);
+}
   return (
         <div className="App">
       <header className="App-header">
@@ -50,7 +47,9 @@ function App() {
           />
         </div>
         <div>
-          <h2 className='Create_board'> Create A New Board</h2>
+          <h2 className='createBoard'> Create A New Board</h2>
+          <NewBoardForm onNewBoard={addNewBoard}/>
+
         </div>
         <div>
           <Board 
@@ -58,12 +57,13 @@ function App() {
           onToggleLikes={pressLikes}
           onDeleteCard={deleteCard}
           />
+          <h2 className='cardList'> Inspiration Cards</h2>
         </div>
           <div>
-          <h2 className='Create_card'> Create A New Card</h2>
+          <h2 className='createCard'> Create A New Card</h2>
         </div>
         <div>
-          <h2 className='AI'> Get Inspired </h2>
+          <h2 className='ai'> Get Inspired </h2>
         </div>
       </main>
     </div>
