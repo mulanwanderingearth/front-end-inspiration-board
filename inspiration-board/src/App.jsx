@@ -5,6 +5,7 @@ import Board from './components/Board';
 import axios from 'axios';
 import NewBoardForm from './components/NewBoardForm';
 import NewCardForm from './components/NewCardForm';
+import { useSyncExternalStore } from 'react';
 
 
 
@@ -41,7 +42,7 @@ const endpoint = "http://something";
 
 
 
-// all end points methods here 
+// all end points methods starting here 
 
 
 // card deletion function back end
@@ -60,9 +61,9 @@ function App() {
 
 
   // for testing purpose the examples are used here. 
-  const[boards,setBoards]=useState([]);
+  const[boards,setBoards]=useState(exampleBoardList);
   const[cards, setCards] =useState(exampleCardList);
-  const[selectedBoard, setSelectedBoard] = useState(null); 
+  const[selectedboard, setSelectedBoard] = useState(exampleBoardList[0]); 
 
   // select a board -- change to function
   
@@ -78,7 +79,7 @@ function App() {
   };
   
 
-  //card press like function
+  //card press like function front end
   const pressLikes =(LikedCardId)=>{
     setCards(cards =>
       cards.map(card =>{
@@ -114,8 +115,8 @@ function App() {
       <main>
         <div>
           <SelectedBoard 
-            boardTitle={selectedBoard.boardTitle} 
-            author={selectedBoard.ownerName} 
+            boardTitle={selectedboard.boardTitle} 
+            author={selectedboard.ownerName} 
           />
         </div>
         <div>
