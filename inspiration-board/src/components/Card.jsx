@@ -30,7 +30,7 @@ Card.propTypes = {
     likes: PropTypes.number.isRequired,
     onToggleLikes: PropTypes.func.isRequired,
     onDeleteCard: PropTypes.func.isRequired,
-}
+};
 
 
 export default Card;

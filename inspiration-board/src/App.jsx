@@ -10,11 +10,16 @@ import NewCardForm from './components/NewCardForm';
 
 
 //example board and card
-const exampleBoard = { 
+const exampleBoardList = [{ 
 	boardId: 2048,
 	boardTitle: 'Guards! Guards!',
   ownerName: 'Terry Pratchett',
-};
+},
+{
+  boardId: 2049,
+	boardTitle: 'The Colour of Magic',
+  ownerName: 'Terry Pratchett',
+}];
 
 const exampleCardList = [
 {
@@ -26,9 +31,7 @@ const exampleCardList = [
   cardId: 1025,
   cardMessage:'Knowledge = power = energy = matter = mass',
   cardLikes: 513,
-}
-
-];
+}];
 
 
 
@@ -57,14 +60,16 @@ function App() {
 
 
   // for testing purpose the examples are used here. 
-  const[board,setBoards]=useState(exampleBoard);
+  const[boards,setBoards]=useState([]);
   const[cards, setCards] =useState(exampleCardList);
+  const[selectedBoard, setSelectedBoard] = useState(null); 
 
-
+  // select a board -- change to function
+  
 
   //new Board submission
   const addNewBoard=(boardData) =>{
-    setBoards([...boards,boardData]);
+    setBoards([...boards,boardData]); 
   };
   // new card submission
   const addNewCard=(cardData)=>{
@@ -109,8 +114,8 @@ function App() {
       <main>
         <div>
           <SelectedBoard 
-            boardTitle={board.boardTitle} 
-            author={board.ownerName} 
+            boardTitle={selectedBoard.boardTitle} 
+            author={selectedBoard.ownerName} 
           />
         </div>
         <div>
