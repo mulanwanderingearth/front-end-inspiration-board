@@ -2,9 +2,13 @@ import { useState } from 'react'
 import './App.css'
 import SelectedBoard from './components/SelectedBoard'
 import Board from './components/Board';
-
+import axios from 'axios';
 import NewBoardForm from './components/NewBoardForm';
 import NewCardForm from './components/NewCardForm';
+
+
+
+
 //example board and card
 const exampleBoard = { 
 	boardId: 2048,
@@ -14,12 +18,12 @@ const exampleBoard = {
 
 const exampleCardList = [
 {
-  cardMessageid: 1024,
+  cardId: 1024,
   cardMessage:'a good bookshop is just a genteel Black Hole that knows how to read',
   cardLikes: 512,
 },
 {
-  cardMessageid: 1025,
+  cardId: 1025,
   cardMessage:'Knowledge = power = energy = matter = mass',
   cardLikes: 513,
 }
@@ -27,29 +31,75 @@ const exampleCardList = [
 ];
 
 
+
+//const endpoint 
+const endpoint = "http://something";
+
+
+
+
+// all end points methods here 
+
+
+// card deletion function back end
+const deleteCardAsync = (deleteCardId) =>{
+
+  return axios.delete(`${endpoint}/cards/${deleteCardId}`)
+    .catch (err =>{
+      console.log(err);
+      throw new Error(`Error deleting card ${deleteCardId}`);
+    })
+};
+
 function App() {
-  const [board, setBoard] = useState(exampleBoard);
-  const [cardsList, setCardsList] = useState(exampleCardList);
-
-  console.log(board.boardTitle);
+  // const[boards,setBoards]=useState([]);
+  // const[cards, setCards] =useState([]);
 
 
-  const[boards,setBoards]=useState([]);
-  const[cards, setCards] =useState([]);
+  // for testing purpose the examples are used here. 
+  const[board,setBoards]=useState(exampleBoard);
+  const[cards, setCards] =useState(exampleCardList);
+
+
+
+  //new Board submission
   const addNewBoard=(boardData) =>{
     setBoards([...boards,boardData]);
   };
+  // new card submission
   const addNewCard=(cardData)=>{
     setCards([...cards,cardData]);
 
   };
   
 
+  //card press like function
+  const pressLikes =(LikedCardId)=>{
+    setCards(cards =>
+      cards.map(card =>{
+        if(card.cardId == LikedCardId){
+          return{...card,cardLikes : card.cardLikes +1}; 
+        }else{
+          return card;
+        }
+      })
+    )
+  };
 
-  //board display cards functions
-  const pressLikes =()=>{};
+  //card deletion fuction front end
+  const deleteCard =(deleteCardId)=>{
+    return deleteCardAsync(deleteCardId)
+      .then(()=>{
+        setCards( oldCards =>{
+          return oldCards.filter(card => card.cardId !== deleteCardId);
+        });
+      })
+      .catch(err =>{
+        console.log(err.message);
+      })
+  };
 
-  const deleteCard =()=>{};
+
 
   return (
         <div className="App">
@@ -70,7 +120,7 @@ function App() {
         </div>
         <div>
           <Board 
-          cards={cardsList}
+          cards={cards}
           onToggleLikes={pressLikes}
           onDeleteCard={deleteCard}
           />
