@@ -102,7 +102,7 @@ const postPromptToAPI = (prompt) => {
 
 
 // card deletion function to back end
-const deleteCardAsync = (deleteCardId) => {
+const deleteCardtoAPI = (deleteCardId) => {
 
   return axios.delete(`${endpoint}/cards/${deleteCardId}`)
     .catch(err => {
@@ -110,6 +110,18 @@ const deleteCardAsync = (deleteCardId) => {
       throw new Error(`Error deleting card ${deleteCardId}`);
     })
 };
+
+//card likes function to back end
+const changLiketoAPI = (changeLikeCardID,newLikes) =>{
+  return axios.patch(`${endpoint}/cards/${changeLikeCardID}`,
+    {likes:newLikes})
+    .catch(err => {
+      console.log(err);
+      throw new Error(`Error for changing card likes ${changeLikeCardID}`);
+    })
+};
+
+
 
 //beginning of App
 
@@ -156,20 +168,23 @@ function App() {
 
   //card press like function front end
   const pressLikes = (LikedCardId) => {
-    setCards(cards =>
-      cards.map(card => {
-        if (card.cardId == LikedCardId) {
-          return { ...card, cardLikes: card.cardLikes + 1 };
-        } else {
-          return card;
-        }
-      })
+  const card = cards.find(c => c.cardId === LikedCardId);
+  if (!card) return; 
+  const newLikes = card.cardLikes + 1;
+  setCards(cards =>
+    cards.map(c =>
+      c.cardId === LikedCardId
+        ? { ...c, cardLikes: newLikes }
+        : c
     )
-  };
+  );
+
+  changLiketoAPI(LikedCardId, newLikes);
+};
 
   //card deletion fuction front end
   const deleteCard = (deleteCardId) => {
-    return deleteCardAsync(deleteCardId)
+    return deleteCardtoAPI(deleteCardId)
       .then(() => {
         setCards(oldCards => {
           return oldCards.filter(card => card.cardId !== deleteCardId);
