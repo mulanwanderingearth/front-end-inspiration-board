@@ -20,16 +20,28 @@ const NewCardForm = ({ onNewCard }) => {
         cardLikes:0
     });
   };
- 
+
+  const isValidInput = (input)=> {
+    return input.length >0  && input.length <= 40
+  };
   return (
     <form onSubmit={handleSubmit}>
       <h1>CREAT A NEW CARD</h1>
-
       <label htmlFor="cardMessage">Message</label>
-      <input id="cardMessage" name="cardMessage" value={cardData.cardMessage} onChange={handleChange} />
+      <input 
+        id="cardMessage" 
+        name="cardMessage" 
+        value={cardData.cardMessage} 
+        onChange={handleChange}
+        className={isValidInput(cardData.cardMessage) ? 'valid' : 'invalid'} 
+      />
       
       <p>Preview:{cardData.cardMessage}</p>
-      <input type="submit" value="Add Card" />
+      <input 
+        type="submit" 
+        value="Add Card" 
+        disabled={!isValidInput(cardData.cardMessage)} 
+      />
       
 
     </form>
