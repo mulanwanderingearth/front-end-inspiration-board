@@ -119,7 +119,7 @@ function App() {
   const [boards, setBoards] = useState(exampleBoardList);
   const [cards, setCards] = useState(exampleCardList);
   const [selectedboard, setSelectedBoard] = useState(exampleBoardList[0]);
-  const[loading,setloading] = useState(false); 
+  const[loading,setLoading] = useState(false); 
   const[inspirationStory, setInspirationStory] = useState('');
 
   // select a board -- change to function
@@ -143,6 +143,14 @@ function App() {
       })
       .catch(error => console.log(error));
   };
+
+
+  //BoardList function
+  const handleSelectBoard = (board) => {
+    setSelectedBoard(board);
+  };
+
+
 
 
   //card press like function front end
@@ -174,16 +182,23 @@ function App() {
 
 
   // AI getInspired functions
-  const promptMessage = cards.map(card => card.cardMessage).join(' ,');
 
-  const getInspired =() =>{
+  const handleGetInspired = () => {
+    setLoading(true);
 
+    const allCardMessages = cards
+      .map(card => card.cardMessage)
+      .join(', ');
 
-
-    postPromptToAPI(promptMessage);
+    postPromptToAPI(allCardMessages)
+      .then(story => {
+        setInspirationStory(story);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
-
-  
+    
 
 
 
@@ -198,7 +213,10 @@ function App() {
       </header>
       <main>
         <div>
-          <BoardSelection/>  
+          <BoardList 
+          boards={boards}
+          onSelectBoard={handleSelectBoard}
+          />  
         </div>
         <div>
           <SelectedBoard
@@ -224,7 +242,11 @@ function App() {
           <NewCardForm onNewCard={addNewCard} />
         </div>
         <div>
-          <GetInspired/>
+          <GetInspired
+          onGetInspiredButton={handleGetInspired}
+          inspirationStory={inspirationStory}
+          loading={loading}
+          />
         </div>
       </main>
     </div>
