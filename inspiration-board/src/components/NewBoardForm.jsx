@@ -23,35 +23,35 @@ const NewBoardForm = ({ onNewBoard }) => {
   const handleHideForm = () => {
     setShowForm(!showForm);
   };
-  
-  const isValidInput = (input)=> {
-    return input.length >0  && input.length <= 40
+
+  const isValidInput = (input) => {
+    return input.length > 0 && input.length <= 40
   };
   return (
     <form onSubmit={handleSubmit}>
       <h1>CREAT A NEW BOARD</h1>
-      <div className={showForm?'form-visible':'form-hidden'}>
+      <div className={showForm ? 'form-visible' : 'form-hidden'}>
         <label htmlFor="boardTitle">Title</label>
-        <input 
-          id="boardTitle" 
-          name="boardTitle" 
-          value={boardData.boardTitle} 
-          onChange={handleChange} 
-          className={isValidInput(boardData.boardTitle) ? 'Valid':'invalid'}
+        <input
+          id="boardTitle"
+          name="boardTitle"
+          value={boardData.boardTitle}
+          onChange={handleChange}
+          className={isValidInput(boardData.boardTitle) ? 'Valid' : 'invalid'}
         />
         <label htmlFor="ownerNmae">Owner's Name</label>
-        <input 
-          id="ownerName" 
-          name="ownerName" 
-          value={boardData.ownerName} 
+        <input
+          id="ownerName"
+          name="ownerName"
+          value={boardData.ownerName}
           onChange={handleChange}
-          className={isValidInput(boardData.ownerName) ? 'Valid':'invalid'}
-           />
+          className={isValidInput(boardData.ownerName) ? 'Valid' : 'invalid'}
+        />
         <p>Preview:{boardData.boardTitle}-{boardData.ownerName}</p>
-        <input 
-          type="submit" 
-          value="Add Board" 
-          disabled={!(isValidInput(boardData.ownerName) && isValidInput(boardData.boardTitle)) } 
+        <input
+          type="submit"
+          value="Add Board"
+          disabled={!(isValidInput(boardData.ownerName) && isValidInput(boardData.boardTitle))}
         />
       </div>
       <button onClick={handleHideForm}>{showForm ? 'Hide New Board Form' : 'Show New Board'}</button>
