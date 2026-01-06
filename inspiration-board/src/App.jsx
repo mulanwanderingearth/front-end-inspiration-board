@@ -2,6 +2,8 @@ import { useState } from 'react'
 import './App.css'
 import SelectedBoard from './components/SelectedBoard'
 import Board from './components/Board';
+import BoardSelection from './components/BoardSelection';
+import GetInspired from './components/GetInspired';
 import axios from 'axios';
 import NewBoardForm from './components/NewBoardForm';
 import NewCardForm from './components/NewCardForm';
@@ -39,35 +41,38 @@ const exampleCardList = [
 //const endpoint 
 const endpoint = "http://something";
 
-//needs two functions converFromApi and convertToApi
+
+// data transformation functions here
+
+
+
+
+
 
 
 
 // all end points methods starting here 
-const addNewBoardApi = (boardData)=> {
-  const {boardTitle,ownerName} = boardData;
-  return axios.post(`${endpoint}/boards`,{
-    boardTitle,
-    ownerName
-  })
-  .then(response => response.data)
-  .catch(error =>{
-    console.log(error);
-    throw error;
-  });
+const postPromptToAPI = (prompt) => {
+  return axios
+    .post(`${endpoint}/get_inspired`, {
+      messages: prompt
+    })
+    .then(response => {
+      return response.data.text;
+    })
+    .catch(error => {
+      console.error(error);
+      throw new Error(
+        error.response?.data?.message || 'Failed to get inspiration'
+      );
+    });
 };
 
-const addNewCardApi = (cardData) => {
-const {cardMessage} = cardData;
-  return axios.post(`${endpoint}/boards/id/cards`,{
-    cardMessage
-  })
-  .then(response => response.data)
-  .catch(error =>{
-    console.log(error);
-    throw error;
-  });
-};
+
+
+
+
+
 
 // card deletion function back end
 const deleteCardAsync = (deleteCardId) =>{
@@ -79,6 +84,9 @@ const deleteCardAsync = (deleteCardId) =>{
     })
 };
 
+
+
+
 function App() {
   // const[boards,setBoards]=useState([]);
   // const[cards, setCards] =useState([]);
@@ -88,28 +96,20 @@ function App() {
   const[boards,setBoards]=useState(exampleBoardList);
   const[cards, setCards] =useState(exampleCardList);
   const[selectedboard, setSelectedBoard] = useState(exampleBoardList[0]); 
+  const[loading,setloading] = useState(false); 
+  const [inspirationStory, setInspirationStory] = useState('');
 
   // select a board -- change to function
   
 
   //new Board submission
   const addNewBoard=(boardData) =>{
-    addNewBoardApi(boardData)
-    .then(response => {
-      const convertedNewBoard = convertFromApi(response);
-      setBoards([...boards,convertedNewBoard]);
-    })
-    .catch(error => console.log(error));  
+    setBoards([...boards,boardData]); 
   };
-
   // new card submission
   const addNewCard=(cardData)=>{
-    addNewCardApi(cardData)
-    .then(response => {
-      const convertedNewCard = convertFromApi(response);
-      setBoards([...cards,convertedNewCard]);
-    })
-    .catch(error => console.log(error));  
+    setCards([...cards,cardData]);
+
   };
   
 
@@ -141,12 +141,33 @@ function App() {
 
 
 
+  // AI getInspired functions
+  const promptMessage = cards.map(card => card.cardMessage).join(' ,');
+
+  const getInspired =() =>{
+
+
+
+    postPromptToAPI(promptMessage);
+  };
+
+  
+
+
+
+
+
+
+
   return (
         <div className="App">
       <header className="App-header">
         <h1>Inspiration Board</h1>
       </header>
       <main>
+        <div>
+          <BoardSelection/>  
+        </div>
         <div>
           <SelectedBoard 
             boardTitle={selectedboard.boardTitle} 
@@ -156,7 +177,6 @@ function App() {
         <div>
           
           <NewBoardForm onNewBoard={addNewBoard}/>
-
         </div>
         <div>
           <Board 
@@ -171,7 +191,7 @@ function App() {
           <NewCardForm onNewCard = {addNewCard} />
         </div>
         <div>
-          <h2 className='ai'> Get Inspired </h2>
+          <GetInspired/>
         </div>
       </main>
     </div>
