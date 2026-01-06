@@ -4,7 +4,8 @@ import './NewCardForm.css'
 
 const NewCardForm = ({ onNewCard }) => {
   const [cardData, setCardData] = useState({
-    message: ''
+    cardMessage: '',
+    cardLikes:0
   });
 
   const handleChange = (event) => {
@@ -15,19 +16,32 @@ const NewCardForm = ({ onNewCard }) => {
     event.preventDefault();
     onNewCard(cardData);
     setCardData({
-        message: ''
+        cardMessage: '',
+        cardLikes:0
     });
   };
- 
+
+  const isValidInput = (input)=> {
+    return input.length >0  && input.length <= 40
+  };
   return (
     <form onSubmit={handleSubmit}>
       <h1>CREAT A NEW CARD</h1>
-
-      <label htmlFor="message">Message</label>
-      <input id="message" name="message" value={cardData.message} onChange={handleChange} />
+      <label htmlFor="cardMessage">Message</label>
+      <input 
+        id="cardMessage" 
+        name="cardMessage" 
+        value={cardData.cardMessage} 
+        onChange={handleChange}
+        className={isValidInput(cardData.cardMessage) ? 'valid' : 'invalid'} 
+      />
       
-      <p>Preview:{cardData.message}</p>
-      <input type="submit" value="Add Card" />
+      <p>Preview:{cardData.cardMessage}</p>
+      <input 
+        type="submit" 
+        value="Add Card" 
+        disabled={!isValidInput(cardData.cardMessage)} 
+      />
       
 
     </form>

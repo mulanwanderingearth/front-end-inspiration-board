@@ -39,11 +39,35 @@ const exampleCardList = [
 //const endpoint 
 const endpoint = "http://something";
 
+//needs two functions converFromApi and convertToApi
 
 
 
 // all end points methods starting here 
+const addNewBoardApi = (boardData)=> {
+  const {boardTitle,ownerName} = boardData;
+  return axios.post(`${endpoint}/boards`,{
+    boardTitle,
+    ownerName
+  })
+  .then(response => response.data)
+  .catch(error =>{
+    console.log(error);
+    throw error;
+  });
+};
 
+const addNewCardApi = (cardData) => {
+const {cardMessage} = cardData;
+  return axios.post(`${endpoint}/boards/id/cards`,{
+    cardMessage
+  })
+  .then(response => response.data)
+  .catch(error =>{
+    console.log(error);
+    throw error;
+  });
+};
 
 // card deletion function back end
 const deleteCardAsync = (deleteCardId) =>{
@@ -70,12 +94,22 @@ function App() {
 
   //new Board submission
   const addNewBoard=(boardData) =>{
-    setBoards([...boards,boardData]); 
+    addNewBoardApi(boardData)
+    .then(response => {
+      const convertedNewBoard = convertFromApi(response);
+      setBoards([...boards,convertedNewBoard]);
+    })
+    .catch(error => console.log(error));  
   };
+
   // new card submission
   const addNewCard=(cardData)=>{
-    setCards([...cards,cardData]);
-
+    addNewCardApi(cardData)
+    .then(response => {
+      const convertedNewCard = convertFromApi(response);
+      setBoards([...cards,convertedNewCard]);
+    })
+    .catch(error => console.log(error));  
   };
   
 
