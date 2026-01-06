@@ -52,6 +52,8 @@ const endpoint = "http://something";
 
 
 // all end points methods starting here 
+
+// New board to back end
 const addNewBoardApi = (boardData)=> {
   const {boardTitle,ownerName} = boardData;
   return axios.post(`${endpoint}/boards`,{
@@ -65,6 +67,7 @@ const addNewBoardApi = (boardData)=> {
   });
 };
 
+// New card to back end 
 const addNewCardApi = (cardData) => {
 const {cardMessage} = cardData;
   return axios.post(`${endpoint}/boards/id/cards`,{
@@ -77,6 +80,7 @@ const {cardMessage} = cardData;
   });
 };
 
+// AI function to back end
 const postPromptToAPI = (prompt) => {
   return axios
     .post(`${endpoint}/get_inspired`, {
@@ -97,7 +101,7 @@ const postPromptToAPI = (prompt) => {
 
 
 
-// card deletion function back end
+// card deletion function to back end
 const deleteCardAsync = (deleteCardId) => {
 
   return axios.delete(`${endpoint}/cards/${deleteCardId}`)
@@ -107,13 +111,11 @@ const deleteCardAsync = (deleteCardId) => {
     })
 };
 
-
-
+//beginning of App
 
 function App() {
   // const[boards,setBoards]=useState([]);
   // const[cards, setCards] =useState([]);
-
 
   // for testing purpose the examples are used here. 
   const [boards, setBoards] = useState(exampleBoardList);
@@ -134,6 +136,7 @@ function App() {
       })
       .catch(error => console.log(error));
   };
+
   // new card submission
   const addNewCard = (cardData) => {
     addNewCardApi(cardData)
@@ -149,8 +152,6 @@ function App() {
   const handleSelectBoard = (board) => {
     setSelectedBoard(board);
   };
-
-
 
 
   //card press like function front end
@@ -199,10 +200,6 @@ function App() {
       });
   };
     
-
-
-
-
 
 
 
