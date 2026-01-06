@@ -2,7 +2,7 @@ import { useState } from 'react'
 import './App.css'
 import SelectedBoard from './components/SelectedBoard'
 import Board from './components/Board';
-import BoardSelection from './components/BoardSelection';
+import BoardList from './components/BoardList';
 import GetInspired from './components/GetInspired';
 import axios from 'axios';
 import NewBoardForm from './components/NewBoardForm';
