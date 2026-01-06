@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import './GetInspired.css';
-import starIcon from '../assets/Gemini_Generated_Image_7v7lo27v7lo27v7l.png';
+import starIcon from '../assets/star.png';
 
 const GetInspired = ({onGetInspiredButton,inspirationStory,loading}) =>{
     const handleClick = () => {
