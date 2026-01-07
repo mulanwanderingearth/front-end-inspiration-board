@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState,useEffect  } from 'react'
 import './App.css'
 import SelectedBoard from './components/SelectedBoard'
 import Board from './components/Board';
@@ -8,6 +8,7 @@ import axios from 'axios';
 import NewBoardForm from './components/NewBoardForm';
 import NewCardForm from './components/NewCardForm';
 import { useSyncExternalStore } from 'react';
+
 
 
 
@@ -39,24 +40,29 @@ const exampleCardList = [
 
 
 //const endpoint 
-const endpoint = "http://something";
-
+// const endpoint = "http://something";
+const VITE_APP_BACKEND_URL = import.meta.env.VITE_APP_BACKEND_URL
 
 // data transformation functions here
 
 
-
-
-
-
-
-
 // all end points methods starting here 
 
+//get all boards
+const getAllBoardsApi =()=>{
+   return axios.get(`${VITE_APP_BACKEND_URL}/boards`)
+    .then(response => response.data)
+    .catch(error => console.log(error));
+};
+const getAllCardsApi =()=>{
+   return axios.get(`${VITE_APP_BACKEND_URL}/cards`)
+    .then(response => response.data)
+    .catch(error => console.log(error));
+};
 // New board to back end
 const addNewBoardApi = (boardData)=> {
   const {boardTitle,ownerName} = boardData;
-  return axios.post(`${endpoint}/boards`,{
+  return axios.post(`${VITE_APP_BACKEND_URL}/boards`,{
     boardTitle,
     ownerName
   })
@@ -70,7 +76,7 @@ const addNewBoardApi = (boardData)=> {
 // New card to back end 
 const addNewCardApi = (cardData) => {
 const {cardMessage} = cardData;
-  return axios.post(`${endpoint}/boards/id/cards`,{
+  return axios.post(`${VITE_APP_BACKEND_URL}/boards/id/cards`,{
     cardMessage
   })
   .then(response => response.data)
@@ -83,7 +89,7 @@ const {cardMessage} = cardData;
 // AI function to back end
 const postPromptToAPI = (prompt) => {
   return axios
-    .post(`${endpoint}/get_inspired`, {
+    .post(`${VITE_APP_BACKEND_URL}/get_inspired`, {
       messages: prompt
     })
     .then(response => {
@@ -104,7 +110,7 @@ const postPromptToAPI = (prompt) => {
 // card deletion function to back end
 const deleteCardtoAPI = (deleteCardId) => {
 
-  return axios.delete(`${endpoint}/cards/${deleteCardId}`)
+  return axios.delete(`${VITE_APP_BACKEND_URL}/cards/${deleteCardId}`)
     .catch(err => {
       console.log(err);
       throw new Error(`Error deleting card ${deleteCardId}`);
@@ -113,7 +119,7 @@ const deleteCardtoAPI = (deleteCardId) => {
 
 //card likes function to back end
 const changLiketoAPI = (changeLikeCardID,newLikes) =>{
-  return axios.patch(`${endpoint}/cards/${changeLikeCardID}`,
+  return axios.patch(`${VITE_APP_BACKEND_URL}/cards/${changeLikeCardID}`,
     {likes:newLikes})
     .catch(err => {
       console.log(err);
@@ -136,6 +142,20 @@ function App() {
   const[loading,setLoading] = useState(false); 
   const[inspirationStory, setInspirationStory] = useState('');
 
+  const getAllBoards = () => {
+    return getAllBoardsApi()
+      .then(boards => {
+        const newBoards = boards.map(convertFromAPI);
+        setBoards(newBoards);
+      })
+      .catch(error => {
+        console.log(error);
+        throw error;
+      });
+  };
+  useEffect(() => {
+    getAllBoards();
+  }, []);
   // select a board -- change to function
 
 
@@ -221,47 +241,57 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Inspiration Board</h1>
+        <h1>✨ Inspiration Board ✨</h1>
       </header>
-      <main>
-        <div>
-          <BoardList 
-          boards={boards}
-          onSelectBoard={handleSelectBoard}
-          />  
-        </div>
-        <div>
-          <SelectedBoard
-            boardTitle={selectedboard.boardTitle}
-            author={selectedboard.ownerName}
-          />
-        </div>
-        <div>
+      
+      <section className="selected-board-section">
+        <SelectedBoard
+          boardTitle={selectedboard.boardTitle}
+          author={selectedboard.ownerName}
+        />
+      </section>
 
-          <NewBoardForm onNewBoard={addNewBoard} />
+      <main className="main-layout">
+        {/* 左列：Cards */}
+        <div className="column left-column">
+          <div className="board-selector">
+            <h3>My Boards</h3>
+            <BoardList 
+              boards={boards}
+              onSelectBoard={handleSelectBoard}
+            />  
+          </div>
+          <div className="cards-section">
+            <h2>Inspiration Cards</h2>
+            <Board
+              cards={cards}
+              onToggleLikes={pressLikes}
+              onDeleteCard={deleteCard}
+            />
+          </div>
+        </div>
 
+        {/* 中列：Forms（竖着排列）*/}
+        <div className="column middle-column">
+          <div className="form-container">
+            <NewBoardForm onNewBoard={addNewBoard} />
+          </div>
+          <div className="form-container">
+            <NewCardForm onNewCard={addNewCard} />
+          </div>
         </div>
-        <div>
-          <Board
-            cards={cards}
-            onToggleLikes={pressLikes}
-            onDeleteCard={deleteCard}
-          />
-          <h2 className='cardList'> Inspiration Cards</h2>
-        </div>
-        <div>
-          
-          <NewCardForm onNewCard={addNewCard} />
-        </div>
-        <div>
+
+        {/* 右列：Get Inspired */}
+        <div className="column right-column">
           <GetInspired
-          onGetInspiredButton={handleGetInspired}
-          inspirationStory={inspirationStory}
-          loading={loading}
+            onGetInspiredButton={handleGetInspired}
+            inspirationStory={inspirationStory}
+            loading={loading}
           />
         </div>
       </main>
     </div>
-  )
+  );
 }
+
 export default App

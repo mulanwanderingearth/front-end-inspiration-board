@@ -1,7 +1,9 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+  background-image: url('./assets/background.png');
+  background-size: auto;
+  background-attachment: fixed;
+  background-repeat: repeat;
+  min-height: 100vh;
   text-align: center;
 }
 
