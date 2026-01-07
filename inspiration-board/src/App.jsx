@@ -7,40 +7,9 @@ import GetInspired from './components/GetInspired';
 import axios from 'axios';
 import NewBoardForm from './components/NewBoardForm';
 import NewCardForm from './components/NewCardForm';
-// import { useSyncExternalStore } from 'react';
-
-
-
-
-
-//example board and card
-// const exampleBoardList = [{
-//   boardId: 2048,
-//   boardTitle: 'Guards! Guards!',
-//   ownerName: 'Terry Pratchett',
-// },
-// {
-//   boardId: 2049,
-//   boardTitle: 'The Colour of Magic',
-//   ownerName: 'Terry Pratchett',
-// }];
-
-// const exampleCardList = [
-//   {
-//     cardId: 1024,
-//     cardMessage: 'a good bookshop is just a genteel Black Hole that knows how to read',
-//     cardLikes: 512,
-//   },
-//   {
-//     cardId: 1025,
-//     cardMessage: 'Knowledge = power = energy = matter = mass',
-//     cardLikes: 513,
-//   }];
-
 
 
 //const endpoint 
-// const endpoint = "http://something";
 const VITE_APP_BACKEND_URL = import.meta.env.VITE_APP_BACKEND_URL
 
 // data transformation functions here
@@ -60,16 +29,15 @@ const convertCardFromApi = (card) => {
 };
 
 // all end points methods starting here 
-
 //get all boards api
 const getAllBoardsApi = () => {
   return axios.get(`${VITE_APP_BACKEND_URL}/boards`)
     .then(response => response.data)
     .catch(error => console.log(error));
 };
-//get all cards api
-const getAllCardsApi = () => {
-  return axios.get(`${VITE_APP_BACKEND_URL}/cards`)
+//get all cards of selected board from api
+const getAllCardsApi = (boardId) => {
+  return axios.get(`${VITE_APP_BACKEND_URL}/boards/${boardId}/cards`)
     .then(response => response.data)
     .catch(error => console.log(error));
 };
@@ -118,10 +86,6 @@ const postPromptToAPI = (prompt) => {
     });
 };
 
-
-
-
-
 // card deletion function to back end
 const deleteCardtoAPI = (deleteCardId) => {
 
@@ -153,7 +117,7 @@ function App() {
   // for testing purpose the examples are used here. 
   const [boards, setBoards] = useState([]);
   const [cards, setCards] = useState([]);
-  const [selectedboard, setSelectedBoard] = useState(null);
+  const [selectedBoard, setSelectedBoard] = useState(null);
   const [loading, setLoading] = useState(false);
   const [inspirationStory, setInspirationStory] = useState('');
 
@@ -172,23 +136,6 @@ function App() {
     getAllBoards();
   }, []);
 
-  const getAllCards = () => {
-    return getAllCardsApi()
-      .then(boards => {
-        const newCards = boards.map(convertCardFromApi);
-        setCards(newCards);
-      })
-      .catch(error => {
-        console.log(error);
-        throw error;
-      });
-  };
-  useEffect(() => {
-    getAllCards();
-  }, []);
-  // select a board -- change to function
-
-
   //new Board submission
   const addNewBoard = (boardData) => {
     addNewBoardApi(boardData)
@@ -201,11 +148,12 @@ function App() {
 
   // new card submission
   const addNewCard = (cardData) => {
-    if (!selectedboard) {
+    if (!selectedBoard) {
+      alert('Please select a Board');
       console.log('No board selected');
       return;
     }
-    addNewCardApi(cardData, selectedboard.boardId)
+    addNewCardApi(cardData, selectedBoard.boardId)
       .then(response => {
         const convertedNewCard = convertCardFromApi(response);
         setCards([...cards, convertedNewCard]);
@@ -217,6 +165,12 @@ function App() {
   //BoardList function
   const handleSelectBoard = (board) => {
     setSelectedBoard(board);
+    getAllCardsApi(board.boardId)
+      .then(cardsData => {
+        const newCards = cardsData.map(convertCardFromApi);
+        setCards(newCards);
+      })
+      .catch(error => console.log('Error loading cards:', error));
   };
 
 
@@ -238,6 +192,9 @@ function App() {
 
   //card deletion fuction front end
   const deleteCard = (deleteCardId) => {
+    if (!window.confirm('Do you want to delete this card？')) {
+      return;
+    }
     return deleteCardtoAPI(deleteCardId)
       .then(() => {
         setCards(oldCards => {
@@ -249,11 +206,17 @@ function App() {
       })
   };
 
-
-
   // AI getInspired functions
-
   const handleGetInspired = () => {
+    if (!selectedBoard) {
+      alert('Please select a Board first');
+      return;
+    }
+
+    if (cards.length === 0) {
+      alert('Please add some Cards first');
+      return;
+    }
     setLoading(true);
 
     const allCardMessages = cards
@@ -277,10 +240,10 @@ function App() {
       </header>
 
       <section className="selected-board-section">
-        {selectedboard && (
+        {selectedBoard && (
           <SelectedBoard
-            boardTitle={selectedBoard?.boardTitle}
-            author={selectedBoard?.ownerName}
+            boardTitle={selectedBoard.boardTitle}
+            author={selectedBoard.ownerName}
           />
         )}
       </section>
