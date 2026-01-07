@@ -106,15 +106,9 @@ const changLiketoAPI = (changeLikeCardID, newLikes) => {
     })
 };
 
-
-
 //beginning of App
 
 function App() {
-  // const[boards,setBoards]=useState([]);
-  // const[cards, setCards] =useState([]);
-
-  // for testing purpose the examples are used here. 
   const [boards, setBoards] = useState([]);
   const [cards, setCards] = useState([]);
   const [selectedBoard, setSelectedBoard] = useState(null);
