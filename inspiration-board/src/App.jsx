@@ -10,8 +10,7 @@ import NewCardForm from './components/NewCardForm';
 
 
 //const endpoint 
-const VITE_APP_BACKEND_URL = import.meta.env.VITE_APP_BACKEND_URL;
-
+const VITE_APP_BACKEND_URL = import.meta.env.VITE_APP_BACKEND_URL
 
 // data transformation functions here
 const convertBoardFromApi = (board) => {
@@ -24,7 +23,7 @@ const convertBoardFromApi = (board) => {
 const convertCardFromApi = (card) => {
   return {
     cardId: card.id,
-    cardMessage: card.card_message,
+    cardMessage: card.message,
     cardLikes: card.likes
   };
 };
@@ -33,9 +32,7 @@ const convertCardFromApi = (card) => {
 //get all boards api
 const getAllBoardsApi = () => {
   return axios.get(`${VITE_APP_BACKEND_URL}/boards`)
-    .then(response => response.data
-    )
-      
+    .then(response => response.data)
     .catch(error => console.log(error));
 };
 //get all cards of selected board from api
@@ -63,7 +60,7 @@ const addNewBoardApi = (boardData) => {
 const addNewCardApi = (cardData, boardId) => {
   const { cardMessage } = cardData;
   return axios.post(`${VITE_APP_BACKEND_URL}/boards/${boardId}/cards`, {
-    card_message: cardMessage
+    message: cardMessage
   })
     .then(response => response.data)
     .catch(error => {
@@ -121,7 +118,6 @@ function App() {
   const getAllBoards = () => {
     return getAllBoardsApi()
       .then(boards => {
-        console.log("TRYTRY",boards);
         const newBoards = boards.map(convertBoardFromApi);
         setBoards(newBoards);
       })
@@ -136,6 +132,11 @@ function App() {
 
   //new Board submission
   const addNewBoard = (boardData) => {
+    // 验证输入不为空
+    if (!boardData.boardTitle || !boardData.ownerName) {
+      console.log('Board title and owner name are required');
+      return;
+    }
     addNewBoardApi(boardData)
       .then(response => {
         const convertedNewBoard = convertBoardFromApi(response);
@@ -149,7 +150,7 @@ function App() {
     if (!selectedBoard) {
       alert('Please select a Board');
       console.log('No board selected');
-      return;
+      // return ;
     }
     addNewCardApi(cardData, selectedBoard.boardId)
       .then(response => {
@@ -220,7 +221,7 @@ function App() {
     const allCardMessages = cards
       .map(card => card.cardMessage)
       .join(', ');
-    console.log(allCardMessages);
+
     postPromptToAPI(allCardMessages)
       .then(story => {
         setInspirationStory(story);

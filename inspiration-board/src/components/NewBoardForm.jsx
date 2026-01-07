@@ -54,7 +54,7 @@ const NewBoardForm = ({ onNewBoard }) => {
           disabled={!(isValidInput(boardData.ownerName) && isValidInput(boardData.boardTitle))}
         />
       </div>
-      <button onClick={handleHideForm}>{showForm ? 'Hide New Board Form' : 'Show New Board'}</button>
+      <button type="button" onClick={handleHideForm}>{showForm ? 'Hide New Board Form' : 'Show New Board'}</button>
     </form>
   )
 };
