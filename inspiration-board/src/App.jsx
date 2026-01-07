@@ -1,4 +1,4 @@
-import { useState,useEffect  } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 import SelectedBoard from './components/SelectedBoard'
 import Board from './components/Board';
@@ -7,35 +7,35 @@ import GetInspired from './components/GetInspired';
 import axios from 'axios';
 import NewBoardForm from './components/NewBoardForm';
 import NewCardForm from './components/NewCardForm';
-import { useSyncExternalStore } from 'react';
+// import { useSyncExternalStore } from 'react';
 
 
 
 
 
 //example board and card
-const exampleBoardList = [{
-  boardId: 2048,
-  boardTitle: 'Guards! Guards!',
-  ownerName: 'Terry Pratchett',
-},
-{
-  boardId: 2049,
-  boardTitle: 'The Colour of Magic',
-  ownerName: 'Terry Pratchett',
-}];
+// const exampleBoardList = [{
+//   boardId: 2048,
+//   boardTitle: 'Guards! Guards!',
+//   ownerName: 'Terry Pratchett',
+// },
+// {
+//   boardId: 2049,
+//   boardTitle: 'The Colour of Magic',
+//   ownerName: 'Terry Pratchett',
+// }];
 
-const exampleCardList = [
-  {
-    cardId: 1024,
-    cardMessage: 'a good bookshop is just a genteel Black Hole that knows how to read',
-    cardLikes: 512,
-  },
-  {
-    cardId: 1025,
-    cardMessage: 'Knowledge = power = energy = matter = mass',
-    cardLikes: 513,
-  }];
+// const exampleCardList = [
+//   {
+//     cardId: 1024,
+//     cardMessage: 'a good bookshop is just a genteel Black Hole that knows how to read',
+//     cardLikes: 512,
+//   },
+//   {
+//     cardId: 1025,
+//     cardMessage: 'Knowledge = power = energy = matter = mass',
+//     cardLikes: 513,
+//   }];
 
 
 
@@ -44,46 +44,61 @@ const exampleCardList = [
 const VITE_APP_BACKEND_URL = import.meta.env.VITE_APP_BACKEND_URL
 
 // data transformation functions here
-
+const convertBoardFromApi = (board) => {
+  return {
+    boardId: board.id,
+    boardTitle: board.title,
+    ownerName: board.name
+  };
+};
+const convertCardFromApi = (card) => {
+  return {
+    cardId: card.id,
+    cardMessage: card.card_message,
+    cardLikes: card.likes
+  };
+};
 
 // all end points methods starting here 
 
-//get all boards
-const getAllBoardsApi =()=>{
-   return axios.get(`${VITE_APP_BACKEND_URL}/boards`)
+//get all boards api
+const getAllBoardsApi = () => {
+  return axios.get(`${VITE_APP_BACKEND_URL}/boards`)
     .then(response => response.data)
     .catch(error => console.log(error));
 };
-const getAllCardsApi =()=>{
-   return axios.get(`${VITE_APP_BACKEND_URL}/cards`)
+//get all cards api
+const getAllCardsApi = () => {
+  return axios.get(`${VITE_APP_BACKEND_URL}/cards`)
     .then(response => response.data)
     .catch(error => console.log(error));
 };
+
 // New board to back end
-const addNewBoardApi = (boardData)=> {
-  const {boardTitle,ownerName} = boardData;
-  return axios.post(`${VITE_APP_BACKEND_URL}/boards`,{
-    boardTitle,
-    ownerName
+const addNewBoardApi = (boardData) => {
+  const { boardTitle, ownerName } = boardData;
+  return axios.post(`${VITE_APP_BACKEND_URL}/boards`, {
+    title: boardTitle,
+    name: ownerName
   })
-  .then(response => response.data)
-  .catch(error =>{
-    console.log(error);
-    throw error;
-  });
+    .then(response => response.data)
+    .catch(error => {
+      console.log(error);
+      throw error;
+    });
 };
 
 // New card to back end 
-const addNewCardApi = (cardData) => {
-const {cardMessage} = cardData;
-  return axios.post(`${VITE_APP_BACKEND_URL}/boards/id/cards`,{
-    cardMessage
+const addNewCardApi = (cardData, boardId) => {
+  const { cardMessage } = cardData;
+  return axios.post(`${VITE_APP_BACKEND_URL}/boards/${boardId}/cards`, {
+    card_message: cardMessage
   })
-  .then(response => response.data)
-  .catch(error =>{
-    console.log(error);
-    throw error;
-  });
+    .then(response => response.data)
+    .catch(error => {
+      console.log(error);
+      throw error;
+    });
 };
 
 // AI function to back end
@@ -118,9 +133,9 @@ const deleteCardtoAPI = (deleteCardId) => {
 };
 
 //card likes function to back end
-const changLiketoAPI = (changeLikeCardID,newLikes) =>{
+const changLiketoAPI = (changeLikeCardID, newLikes) => {
   return axios.patch(`${VITE_APP_BACKEND_URL}/cards/${changeLikeCardID}`,
-    {likes:newLikes})
+    { likes: newLikes })
     .catch(err => {
       console.log(err);
       throw new Error(`Error for changing card likes ${changeLikeCardID}`);
@@ -136,16 +151,16 @@ function App() {
   // const[cards, setCards] =useState([]);
 
   // for testing purpose the examples are used here. 
-  const [boards, setBoards] = useState(exampleBoardList);
-  const [cards, setCards] = useState(exampleCardList);
-  const [selectedboard, setSelectedBoard] = useState(exampleBoardList[0]);
-  const[loading,setLoading] = useState(false); 
-  const[inspirationStory, setInspirationStory] = useState('');
+  const [boards, setBoards] = useState([]);
+  const [cards, setCards] = useState([]);
+  const [selectedboard, setSelectedBoard] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [inspirationStory, setInspirationStory] = useState('');
 
   const getAllBoards = () => {
     return getAllBoardsApi()
       .then(boards => {
-        const newBoards = boards.map(convertFromAPI);
+        const newBoards = boards.map(convertBoardFromApi);
         setBoards(newBoards);
       })
       .catch(error => {
@@ -156,6 +171,21 @@ function App() {
   useEffect(() => {
     getAllBoards();
   }, []);
+
+  const getAllCards = () => {
+    return getAllCardsApi()
+      .then(boards => {
+        const newCards = boards.map(convertCardFromApi);
+        setCards(newCards);
+      })
+      .catch(error => {
+        console.log(error);
+        throw error;
+      });
+  };
+  useEffect(() => {
+    getAllCards();
+  }, []);
   // select a board -- change to function
 
 
@@ -163,7 +193,7 @@ function App() {
   const addNewBoard = (boardData) => {
     addNewBoardApi(boardData)
       .then(response => {
-        const convertedNewBoard = convertFromApi(response);
+        const convertedNewBoard = convertBoardFromApi(response);
         setBoards([...boards, convertedNewBoard]);
       })
       .catch(error => console.log(error));
@@ -171,10 +201,14 @@ function App() {
 
   // new card submission
   const addNewCard = (cardData) => {
-    addNewCardApi(cardData)
+    if (!selectedboard) {
+      console.log('No board selected');
+      return;
+    }
+    addNewCardApi(cardData, selectedboard.boardId)
       .then(response => {
-        const convertedNewCard = convertFromApi(response);
-        setBoards([...cards, convertedNewCard]);
+        const convertedNewCard = convertCardFromApi(response);
+        setCards([...cards, convertedNewCard]);
       })
       .catch(error => console.log(error));
   };
@@ -188,19 +222,19 @@ function App() {
 
   //card press like function front end
   const pressLikes = (LikedCardId) => {
-  const card = cards.find(c => c.cardId === LikedCardId);
-  if (!card) return; 
-  const newLikes = card.cardLikes + 1;
-  setCards(cards =>
-    cards.map(c =>
-      c.cardId === LikedCardId
-        ? { ...c, cardLikes: newLikes }
-        : c
-    )
-  );
+    const card = cards.find(c => c.cardId === LikedCardId);
+    if (!card) return;
+    const newLikes = card.cardLikes + 1;
+    setCards(cards =>
+      cards.map(c =>
+        c.cardId === LikedCardId
+          ? { ...c, cardLikes: newLikes }
+          : c
+      )
+    );
 
-  changLiketoAPI(LikedCardId, newLikes);
-};
+    changLiketoAPI(LikedCardId, newLikes);
+  };
 
   //card deletion fuction front end
   const deleteCard = (deleteCardId) => {
@@ -234,7 +268,7 @@ function App() {
         setLoading(false);
       });
   };
-    
+
 
 
 
@@ -243,12 +277,14 @@ function App() {
       <header className="App-header">
         <h1>✨ Inspiration Board ✨</h1>
       </header>
-      
+
       <section className="selected-board-section">
-        <SelectedBoard
-          boardTitle={selectedboard.boardTitle}
-          author={selectedboard.ownerName}
-        />
+        {selectedboard && (
+          <SelectedBoard
+            boardTitle={selectedboard.boardTitle}
+            author={selectedboard.ownerName}
+          />
+        )}
       </section>
 
       <main className="main-layout">
@@ -256,10 +292,10 @@ function App() {
         <div className="column left-column">
           <div className="board-selector">
             <h3>My Boards</h3>
-            <BoardList 
+            <BoardList
               boards={boards}
               onSelectBoard={handleSelectBoard}
-            />  
+            />
           </div>
           <div className="cards-section">
             <h2>Inspiration Cards</h2>
