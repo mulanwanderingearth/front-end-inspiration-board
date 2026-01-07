@@ -6,21 +6,21 @@ const GetInspired = ({onGetInspiredButton,inspirationStory,loading}) =>{
     const handleClick = () => {
     onGetInspiredButton();
     };
-    return <div>
-        <button onClick={handleClick}>
+    return <div className="GetInspired">
+        <button onClick={handleClick} className="star-button">
             <img
                 src={starIcon}
                 alt="Star Button"
                 className="star-button-icon"/>
         </button>
-        {loading && <p className="placeholder">Thinking very hard… ✨</p>}
+        {loading && <p className="inspiration-loading">Thinking very hard… ✨</p>}
 
         {!loading && inspirationStory && (
-        <p className="inspiration-text">{inspirationStory}</p>
+        <div className="inspiration-story">{inspirationStory}</div>
         )}
 
         {!loading && !inspirationStory && (
-        <p className="placeholder">Click the star to get inspired ✨</p>
+        <p className="inspiration-loading">Click the star to get inspired ✨</p>
 )}
     </div>
 };

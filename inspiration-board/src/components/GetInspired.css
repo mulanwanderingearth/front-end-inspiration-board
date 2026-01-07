@@ -1,0 +1,50 @@
+.GetInspired {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    height: 100%;
+}
+
+.GetInspired button {
+    background: #5a4a3a;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: background 0.3s;
+}
+
+.GetInspired button:hover {
+    background: #7a6a4a;
+}
+
+.GetInspired button:disabled {
+    background: #9a8a6a;
+    cursor: not-allowed;
+}
+
+.inspiration-story {
+    flex: 1;
+    background: transparent;
+    padding: 1.2rem;
+    border-radius: 8px;
+    overflow-y: auto;
+    color: #5a4a3a;
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+.inspiration-loading {
+    text-align: center;
+    color: #5a4a3a;
+    font-size: 0.9rem;
+    padding: 2rem;
+}
+
+.star {
+    font-size: 0.8rem;
+    margin-right: 0.2rem;
+}

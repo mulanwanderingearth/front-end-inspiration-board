@@ -3,7 +3,7 @@ import './SelectedBoard.css';
 
 const SelectedBoard = ({boardTitle,author}) => {
     return <section> 
-        <h2>Selected Board</h2>
+        <h3>Selected Board</h3>
         <p> {boardTitle}  by {author}</p>
     </section>;
 };

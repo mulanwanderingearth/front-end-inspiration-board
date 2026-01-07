@@ -29,8 +29,9 @@ const NewBoardForm = ({ onNewBoard }) => {
   };
   return (
     <form onSubmit={handleSubmit}>
-      <h1>CREAT A NEW BOARD</h1>
+      <h3>CREAT A NEW BOARD</h3>
       <div className={showForm ? 'form-visible' : 'form-hidden'}>
+        <div>
         <label htmlFor="boardTitle">Title</label>
         <input
           id="boardTitle"
@@ -39,6 +40,8 @@ const NewBoardForm = ({ onNewBoard }) => {
           onChange={handleChange}
           className={isValidInput(boardData.boardTitle) ? 'Valid' : 'invalid'}
         />
+        </div>
+        <div>
         <label htmlFor="ownerNmae">Owner's Name</label>
         <input
           id="ownerName"
@@ -47,6 +50,7 @@ const NewBoardForm = ({ onNewBoard }) => {
           onChange={handleChange}
           className={isValidInput(boardData.ownerName) ? 'Valid' : 'invalid'}
         />
+        </div>
         <p>Preview:{boardData.boardTitle}-{boardData.ownerName}</p>
         <input
           type="submit"
@@ -54,7 +58,7 @@ const NewBoardForm = ({ onNewBoard }) => {
           disabled={!(isValidInput(boardData.ownerName) && isValidInput(boardData.boardTitle))}
         />
       </div>
-      <button onClick={handleHideForm}>{showForm ? 'Hide New Board Form' : 'Show New Board'}</button>
+      <button type="button" onClick={handleHideForm}>{showForm ? 'Hide New Board Form' : 'Show New Board'}</button>
     </form>
   )
 };

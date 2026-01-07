@@ -246,7 +246,7 @@ function App() {
         {/* 左列：Cards */}
         <div className="column left-column">
           <div className="board-selector">
-            <h3>My Boards</h3>
+            <h4>My Boards</h4>
             <BoardList
               boards={boards}
               onSelectBoard={handleSelectBoard}

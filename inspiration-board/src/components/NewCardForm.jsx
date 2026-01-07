@@ -27,7 +27,7 @@ const NewCardForm = ({ onNewCard }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h1>CREAT A NEW CARD</h1>
+      <h3>CREAT A NEW CARD</h3>
       <label htmlFor="cardMessage">Message</label>
       <input
         id="cardMessage"

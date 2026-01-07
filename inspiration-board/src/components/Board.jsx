@@ -18,10 +18,10 @@ const Board = ({cards,onToggleLikes,onDeleteCard}) => {
     };
 
     if (! cards.length){
-        return<div> L’idée arrive… patience 🙂</div>
+        return<div className="board-empty"> L'idée arrive… patience 🙂</div>
     }
 
-    return <ul className = 'display_cards_for_a_board'>{getAllCardsforABoard(cards)}</ul>
+    return <div className = 'board'>{getAllCardsforABoard(cards)}</div>
 };
 
 Board.propTypes = {
