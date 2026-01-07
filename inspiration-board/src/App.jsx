@@ -10,7 +10,8 @@ import NewCardForm from './components/NewCardForm';
 
 
 //const endpoint 
-const VITE_APP_BACKEND_URL = import.meta.env.VITE_APP_BACKEND_URL
+const VITE_APP_BACKEND_URL = import.meta.env.VITE_APP_BACKEND_URL;
+
 
 // data transformation functions here
 const convertBoardFromApi = (board) => {
@@ -32,7 +33,9 @@ const convertCardFromApi = (card) => {
 //get all boards api
 const getAllBoardsApi = () => {
   return axios.get(`${VITE_APP_BACKEND_URL}/boards`)
-    .then(response => response.data)
+    .then(response => response.data
+    )
+      
     .catch(error => console.log(error));
 };
 //get all cards of selected board from api
@@ -118,6 +121,7 @@ function App() {
   const getAllBoards = () => {
     return getAllBoardsApi()
       .then(boards => {
+        console.log("TRYTRY",boards);
         const newBoards = boards.map(convertBoardFromApi);
         setBoards(newBoards);
       })
@@ -216,7 +220,7 @@ function App() {
     const allCardMessages = cards
       .map(card => card.cardMessage)
       .join(', ');
-
+    console.log(allCardMessages);
     postPromptToAPI(allCardMessages)
       .then(story => {
         setInspirationStory(story);
