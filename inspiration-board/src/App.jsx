@@ -132,7 +132,7 @@ function App() {
 
   //new Board submission
   const addNewBoard = (boardData) => {
-    // 验证输入不为空
+    
     if (!boardData.boardTitle || !boardData.ownerName) {
       console.log('Board title and owner name are required');
       return;

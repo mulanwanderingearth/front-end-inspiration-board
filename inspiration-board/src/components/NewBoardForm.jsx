@@ -33,14 +33,16 @@ const NewBoardForm = ({ onNewBoard }) => {
       <div className={showForm ? 'form-visible' : 'form-hidden'}>
         <label htmlFor="boardTitle">Title</label>
         <input
+          type="text"
           id="boardTitle"
           name="boardTitle"
           value={boardData.boardTitle}
           onChange={handleChange}
           className={isValidInput(boardData.boardTitle) ? 'Valid' : 'invalid'}
         />
-        <label htmlFor="ownerNmae">Owner's Name</label>
+        <label htmlFor="ownerName">Owner's Name</label>
         <input
+          type="text"
           id="ownerName"
           name="ownerName"
           value={boardData.ownerName}

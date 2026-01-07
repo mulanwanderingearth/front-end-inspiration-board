@@ -30,6 +30,7 @@ const NewCardForm = ({ onNewCard }) => {
       <h1>CREAT A NEW CARD</h1>
       <label htmlFor="cardMessage">Message</label>
       <input
+        type="text"
         id="cardMessage"
         name="cardMessage"
         value={cardData.cardMessage}
