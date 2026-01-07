@@ -8,6 +8,7 @@ const Board = ({cards,onToggleLikes,onDeleteCard}) => {
         return cards.map((card) =>{
             return (
                 <Card
+                key = {card.cardId}
                 id = {card.cardId}
                 cardMessage= {card.cardMessage}
                 likes = {card.cardLikes}
