@@ -217,51 +217,45 @@ function App() {
     
 
 
-
   return (
     <div className="App">
       <header className="App-header">
         <h1>Inspiration Board</h1>
       </header>
-      <main>
-        <div>
-          <BoardList 
-          boards={boards}
-          onSelectBoard={handleSelectBoard}
-          />  
-        </div>
-        <div>
+
+      <main className="App-main">
+        <section className="selected-board-section">
           <SelectedBoard
-            boardTitle={selectedboard.boardTitle}
-            author={selectedboard.ownerName}
+            boardTitle={selectedBoard?.boardTitle}
+            author={selectedBoard?.ownerName}
           />
-        </div>
-        <div>
+        </section>
 
-          <NewBoardForm onNewBoard={addNewBoard} />
+        <section className="controls-section">
+          <div className="board-selection">
+            <BoardList boards={boards} onSelectBoard={handleSelectBoard} />
+          </div>
 
-        </div>
-        <div>
-          <Board
-            cards={cards}
-            onToggleLikes={pressLikes}
-            onDeleteCard={deleteCard}
-          />
-          <h2 className='cardList'> Inspiration Cards</h2>
-        </div>
-        <div>
-          
-          <NewCardForm onNewCard={addNewCard} />
-        </div>
-        <div>
-          <GetInspired
-          onGetInspiredButton={handleGetInspired}
-          inspirationStory={inspirationStory}
-          loading={loading}
-          />
-        </div>
+          <div className="board-cards-inspiration">
+            <div className="board-cards">
+              <Board
+                cards={cards}
+                onToggleLikes={pressLikes}
+                onDeleteCard={deleteCard}
+              />
+            </div>
+
+            <div className="get-inspired">
+              <GetInspired
+                onGetInspiredButton={handleGetInspired}
+                inspirationStory={inspirationStory}
+                loading={loading}
+              />
+            </div>
+          </div>
+        </section>
       </main>
     </div>
-  )
-}
+  );
+};
 export default App
