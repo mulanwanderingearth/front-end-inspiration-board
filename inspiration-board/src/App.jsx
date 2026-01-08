@@ -259,7 +259,10 @@ return (
         />
 
         <div className="board-card-feed">
-          <h2>Inspiration Cards</h2>
+          <SelectedBoard
+          boardTitle={selectedBoard.boardTitle}
+          author={selectedBoard.ownerName}
+        />
           <Board
             cards={cards}
             onToggleLikes={pressLikes}
@@ -291,10 +294,6 @@ return (
       <div className="story-panel-header">
         <h2>Generated Story</h2>
         <p className="panel-subtitle"></p>
-        <SelectedBoard
-          boardTitle={selectedBoard.boardTitle}
-          author={selectedBoard.ownerName}
-        />
       </div>
 
       <GetInspired
