@@ -7,6 +7,7 @@ import GetInspired from './components/GetInspired';
 import axios from 'axios';
 import NewBoardForm from './components/NewBoardForm';
 import NewCardForm from './components/NewCardForm';
+import DeleteBoardBtn from './components/DeleteBoardBtn';
 
 
 //const endpoint 
@@ -71,8 +72,7 @@ const addNewCardApi = (cardData, boardId) => {
 
 // AI function to back end
 const postPromptToAPI = (prompt) => {
-  return axios
-    .post(`${VITE_APP_BACKEND_URL}/cards/get_inspired`, {
+  return axios.post(`${VITE_APP_BACKEND_URL}/cards/get_inspired`, {
       messages: prompt
     })
     .then(response => {
@@ -106,6 +106,27 @@ const changLiketoAPI = (changeLikeCardID, newLikes) => {
     })
 };
 
+// board deletion function to back end
+
+const deleteOneBoardAPI = (deleteBoardID) =>{
+    return axios.delete(`${VITE_APP_BACKEND_URL}/boards/${deleteBoardID}`)
+    .catch(err => {
+      console.log(err);
+      throw new Error(`Error deleting board ${deleteBoardID}`);
+    })
+};
+
+const deleteAllBoardsAPI =() =>{
+  return axios.delete(`${VITE_APP_BACKEND_URL}/boards`)
+    .catch(err => {
+      console.log(err);
+      throw new Error(`Error deleting all boards`);
+    })
+};
+
+
+
+/*************************************************************************************************/
 //beginning of App
 
 function App() {
@@ -230,7 +251,29 @@ function App() {
         setLoading(false);
       });
   };
+  
+  // New delete board buttons funcitons
+  const handleDeleteOneBoard = () => {
+  if (!selectedBoard) return; // safety check
 
+  deleteOneBoardAPI(selectedBoard.boardId)
+    .then(() => {
+      setBoards(prevBoards =>
+        prevBoards.filter(board => board.boardId !== selectedBoard.boardId)
+      );
+      setSelectedBoard(null);
+    })
+    .catch(err => console.log(err.message));
+  };
+
+  const handleDeleteAllBoards =() =>{
+    deleteAllBoardsAPI()
+    .then(() => {
+      setBoards([]);
+      setSelectedBoard(null);
+    })
+    .catch(err => console.log(err.message));
+  };
 
 return (
   <div className="app-root">
@@ -257,7 +300,11 @@ return (
           boards={boards}
           onSelectBoard={handleSelectBoard}
         />
-
+        <div>
+        <DeleteBoardBtn
+        onDeleteOneBoard={handleDeleteOneBoard}
+        onDeleteAllBoards={handleDeleteAllBoards}/>
+        </div>
         <div className="board-card-feed">
           {selectedBoard && (<SelectedBoard
           boardTitle={selectedBoard.boardTitle}
@@ -275,7 +322,7 @@ return (
       <section className="layout-column layout-column-middle">
         <div className="form-panel">
           <h2 className="panel-title">Write Your Story</h2>
-           <p className="panel-subtitle">
+            <p className="panel-subtitle">
             Share your magical inspiration with the world
             </p>
           <NewBoardForm onNewBoard={addNewBoard} />

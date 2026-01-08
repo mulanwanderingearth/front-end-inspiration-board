@@ -1,16 +1,17 @@
 import PropTypes from 'prop-types';
 import './DeleteBoardBtn.css';
 
-const DeleteBoardBtn= ({func_1, func_2}) => {
+const DeleteBoardBtn= ({onDeleteOneBoard, onDeleteAllBoards}) => {
+
     return <section> 
-        <button onClick={func_1}>delet all boards</button>
-        <button onClick={func_2}>delete current board</button>
+        <button onClick={onDeleteOneBoard}>delet current board</button>
+        <button onClick={onDeleteAllBoards}>delete all Boards</button>
     </section>;
 };
 
-SelectedBoard.propTypes = {
-    boardTitle: PropTypes.string.isRequired,
-    author: PropTypes.string.isRequired,
+DeleteBoardBtn.propTypes = {
+    onDeleteOneBoard: PropTypes.func.isRequired,
+    onDeleteAllBoards: PropTypes.func.isRequired,
 };
 
-export default SelectedBoard;
+export default DeleteBoardBtn;
