@@ -1,76 +1,55 @@
+/* Card container styled as sticky note */
 .card_content {
-    width: 220px;
-    min-height: 180px;
+    background-color: var(--card-bg);                     
+    border: 2px solid rgba(139, 92, 246, 0.15);          
+    border-radius: 12px;
     padding: 1rem;
-    background: #fff9a8; /* classic post-it yellow */
-    border-radius: 4px;
-    box-shadow:
-    2px 2px 6px rgba(0, 0, 0, 0.25);
-    transform: rotate(-1.5deg);
-    position: relative;
-    font-family: 'Comic Sans MS', 'Segoe UI', sans-serif;
-
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 10px rgba(139, 92, 246, 0.08);     
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    gap: 0.5rem;
+    max-width: 250px;                                    
 }
 
-.card_content:hover {
-    transform: rotate(0deg) scale(1.03);
-    box-shadow:
-    4px 4px 12px rgba(0, 0, 0, 0.35);
-}
-
-/* The little folded corner effect */
-.card_content::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 30px;
-    height: 30px;
-    background: #f0e68c;
-    clip-path: polygon(0 100%, 100% 0, 100% 100%);
-    box-shadow: -2px -2px 4px rgba(0, 0, 0, 0.15);
-}
-
+/* Card message (title/content) */
 .card_message {
-    color:black;
-    font-size: 1.1rem;
+    font-size: 1rem;
+    color: var(--primary); /* same as "Like" button */
     margin-bottom: 0.5rem;
-    word-wrap: break-word;
 }
 
-/* Likes text */
-.card_content p {
-    color: pink;
-    margin: 0.5rem 0;
-    font-size: 0.9rem;
+/* Buttons container (Like, Delete, Total Likes) */
+.card_actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.85rem;
 }
 
-/* Buttons */
-.like,
-.delete_card {
+/* Heart button */
+.like {
+    cursor: pointer;
     border: none;
     background: transparent;
-    cursor: pointer;
-    font-size: 1.3rem;
-    padding: 0.2rem;
-    transition: transform 0.1s ease;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
 }
 
-.like:hover {
-    transform: scale(1.2);
-}
-
+/* Delete button */
 .delete_card {
-    position: absolute;
-    top: 6px;
-    right: 8px;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    color: #ef4444;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
 }
 
-.delete_card:hover {
-    transform: scale(1.2);
+/* Total Likes label */
+.total_likes {
+    color: var(--text-muted);
 }

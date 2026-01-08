@@ -232,62 +232,83 @@ function App() {
   };
 
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <h1>✨ Inspiration Board ✨</h1>
-      </header>
+return (
+  <div className="app-root">
+    
+    {/* Header */}
+    <header className="app-header">
+      <div className="header-inner">
+        <h1 className="app-title">✨ Inspiration Board ✨</h1>
+      </div>
+    </header>
 
-      <section className="selected-board-section">
-        {selectedBoard && (
+    {/* 3-column layout */}
+    <main className="three-column-layout">
+
+
+      {/* LEFT COLUMN — Boards + Cards */}
+      <section className="layout-column layout-column-left">
+        <div className="board-panel-header">
+          <h2 className="panel-title">My Board</h2>
+          <p className="panel-subtitle">A collection of magical moments</p>
+        </div>
+
+        <BoardList
+          boards={boards}
+          onSelectBoard={handleSelectBoard}
+        />
+
+        <div className="board-card-feed">
           <SelectedBoard
-            boardTitle={selectedBoard.boardTitle}
-            author={selectedBoard.ownerName}
+          boardTitle={selectedBoard.boardTitle}
+          author={selectedBoard.ownerName}
+        />
+          <Board
+            cards={cards}
+            onToggleLikes={pressLikes}
+            onDeleteCard={deleteCard}
           />
+        </div>
+      </section>
+
+      {/* MIDDLE COLUMN — Forms */}
+      <section className="layout-column layout-column-middle">
+        <div className="form-panel">
+          <h2 className="panel-title">Write Your Story</h2>
+           <p className="panel-subtitle">
+            Share your magical inspiration with the world
+            </p>
+          <NewBoardForm onNewBoard={addNewBoard} />
+        </div>
+
+        <div className="form-panel">
+        
+          <NewCardForm onNewCard={addNewCard} />
+        </div>
+      </section>
+
+      {/* RIGHT COLUMN — Selected Board + AI */}
+      <section className="column right-column">
+        {selectedBoard && (
+          <div className="story-panel-content">  {/* unified bubble */}
+      <div className="story-panel-header">
+        <h2>Generated Story</h2>
+        <p className="panel-subtitle"></p>
+      </div>
+
+      <GetInspired
+        onGetInspiredButton={handleGetInspired}
+        inspirationStory={inspirationStory}
+        loading={loading}
+          />
+        </div>
         )}
       </section>
 
-      <main className="main-layout">
-        {/* 左列：Cards */}
-        <div className="column left-column">
-          <div className="board-selector">
-            <h3>My Boards</h3>
-            <BoardList
-              boards={boards}
-              onSelectBoard={handleSelectBoard}
-            />
-          </div>
-          <div className="cards-section">
-            <h2>Inspiration Cards</h2>
-            <Board
-              cards={cards}
-              onToggleLikes={pressLikes}
-              onDeleteCard={deleteCard}
-            />
-          </div>
-        </div>
+    </main>
+  </div>
+);
 
-        {/* 中列：Forms（竖着排列）*/}
-        <div className="column middle-column">
-          <div className="form-container">
-            <NewBoardForm onNewBoard={addNewBoard} />
-          </div>
-          <div className="form-container">
-            <NewCardForm onNewCard={addNewCard} />
-          </div>
-        </div>
-
-        {/* 右列：Get Inspired */}
-        <div className="column right-column">
-          <GetInspired
-            onGetInspiredButton={handleGetInspired}
-            inspirationStory={inspirationStory}
-            loading={loading}
-          />
-        </div>
-      </main>
-    </div>
-  );
 }
 
 export default App

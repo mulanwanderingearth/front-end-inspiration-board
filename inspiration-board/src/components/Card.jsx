@@ -16,9 +16,14 @@ const Card = ({id,cardMessage,likes,onToggleLikes,onDeleteCard}) => {
     return (
     <div className='card_content'>
         <h2 className='card_message'>{cardMessage}</h2>
-        <p>{likes} 💞</p>
-        <button className='like' onClick={() => toggleLike(id)}>{heart}</button>
-        <button className='delete_card' onClick={() => deleteCard(id)}>{deleteButton}</button>
+        <div className="card_actions"> 
+            <p>{likes} 💞</p>
+        <button className='like' onClick={() => toggleLike(id)}>Like: {heart}</button>
+        <button className='delete_card' onClick={() => deleteCard(id)}>Delete Card: {deleteButton}  </button>
+
+        </div>
+
+        
     </div>
     );
 };

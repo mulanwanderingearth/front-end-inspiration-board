@@ -1,0 +1,50 @@
+
+.get-inspired {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  
+  padding: 1rem;
+  background: var(--card-bg);
+  width: fit-content; /* shrink to content */
+}
+
+/* Make the star a proper clickable button with pink background */
+.get-inspired-button {
+  background-color: #ff85a2; /* pink */
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: opacity 0.2s;
+}
+
+.get-inspired-button:hover {
+  opacity: 0.9;
+}
+
+/* Star icon inside the button */
+.star-button-icon {
+  width: 36px; /* smaller star for button */
+  height: 36px;
+  object-fit: contain;
+}
+
+/* Inspiration text below the button */
+.inspiration-text {
+  font-size: 1rem;
+  text-align: center;
+  color: var(--text-main);
+}
+
+.placeholder-text {
+  font-size: 0.9rem;
+  text-align: center;
+  color: #aaa;
+}
