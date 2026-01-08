@@ -259,10 +259,10 @@ return (
         />
 
         <div className="board-card-feed">
-          <SelectedBoard
+          {selectedBoard && (<SelectedBoard
           boardTitle={selectedBoard.boardTitle}
           author={selectedBoard.ownerName}
-        />
+        />)}
           <Board
             cards={cards}
             onToggleLikes={pressLikes}
