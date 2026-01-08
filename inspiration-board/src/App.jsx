@@ -233,8 +233,8 @@ function App() {
 
 
   return (
-    <div className="App">
-      <header className="App-header">
+    <div className="App" style={{ backgroundColor: "#efe7d8", minHeight: "100vh" }} >
+      <header className="App-header" >
         <h1>✨ Inspiration Board ✨</h1>
       </header>
 
@@ -248,8 +248,17 @@ function App() {
       </section>
 
       <main className="main-layout">
-        {/* 左列：Cards */}
-        <div className="column left-column">
+          <div className="column left-column">
+          <div className="form-container">
+            <h3>Create New Board</h3>
+            <NewBoardForm onNewBoard={addNewBoard} />
+          </div>
+          <div className="form-container">
+            <h3>Create New Card</h3>
+            <NewCardForm onNewCard={addNewCard} />
+          </div>
+        </div>
+        <div className="column middle-column">
           <div className="board-selector">
             <h3>My Boards</h3>
             <BoardList
@@ -258,7 +267,7 @@ function App() {
             />
           </div>
           <div className="cards-section">
-            <h2>Inspiration Cards</h2>
+            <h3>Inspiration Cards</h3>
             <Board
               cards={cards}
               onToggleLikes={pressLikes}
@@ -267,18 +276,8 @@ function App() {
           </div>
         </div>
 
-        {/* 中列：Forms（竖着排列）*/}
-        <div className="column middle-column">
-          <div className="form-container">
-            <NewBoardForm onNewBoard={addNewBoard} />
-          </div>
-          <div className="form-container">
-            <NewCardForm onNewCard={addNewCard} />
-          </div>
-        </div>
-
-        {/* 右列：Get Inspired */}
         <div className="column right-column">
+          <h3>Get Inspired </h3>
           <GetInspired
             onGetInspiredButton={handleGetInspired}
             inspirationStory={inspirationStory}

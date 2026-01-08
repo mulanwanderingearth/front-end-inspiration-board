@@ -1,44 +1,164 @@
-#root {
-  background-image: url('./assets/background.png');
-  background-size: auto;
-  background-attachment: fixed;
-  background-repeat: repeat;
+/* App.css */
+
+/* App layout */
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;   /* centers all child elements */
+  gap: 40px;
+  padding: 40px;
   min-height: 100vh;
+  background-color: #efe7d8; /* warm parchment */
+  font-family: "Georgia", serif;
+}
+
+/* Main title */
+.main-title {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #5a3e1b; /* dark walnut, warm and readable */
   text-align: center;
+  margin: 0;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.15); /* subtle depth */
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* Second title section */
+.section-title-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+.section-title {
+  font-size: 2rem;
+  font-weight: 500;
+  color: #7a5230; /* slightly darker warm tone */
+  margin-bottom: 20px;
+}
+
+/* Three columns section */
+.main-layout {
+  display: flex;
+  flex-wrap: wrap;          /* allows stacking on small screens */
+  justify-content: space-between;  /* spread columns across the row */
+  align-items: stretch;     /* equal height columns */
+  gap: 24px;
+  width: 100%;              /* full width of container */
+  margin: 0 auto;
+  max-width: none;          /* remove max-width restriction */
+  padding: 0 40px;          /* optional side padding */
+}
+/* Shared column styles */
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background-color: #f4f0e6;  /* subtle inner board background */
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* Column-specific widths */
+.left-column {
+  flex:  1 0;  /* grows twice as much as right if space allows */
+  min-width: 150px;
+}
+
+.middle-column {
+  flex: 2 1 0;  /* flexible, takes proportionally less */
+  min-width: 250px;
+}
+
+.right-column {
+  flex: 2 1 0;  /* grows like left column */
+  min-width: 250px;
+}
+
+/* Optional: Section titles inside columns */
+.column h2,
+.column h3 {
+  margin: 0 0 12px 0;
+  color: #7a5230;
+}
+
+/* Form containers inside columns */
+.form-container input,
+.form-container textarea,
+.form-container select {
+  background-color: #fffaf2;   /* light paper-like background */
+  color: #7a5230;              /* text color (warm brown) */
+  border: 1px solid #e0d6c3;  /* subtle border */
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-family: 'Cormorant Garamond', Georgia, serif; /* storybook font */
+  font-size: 1rem;
+  outline: none;               /* removes default blue outline on focus */
+  
+}
+
+.form-container input::placeholder,
+.form-container textarea::placeholder {
+  color: #bfa380;              /* lighter warm brown for placeholders */
+}
+
+h1{font-size: 3rem;
+  font-weight: bold;
+  color: #c19a6b; /* soft golden */
+  text-align: center;
+  margin: 0;
+  letter-spacing: 1px;
+  text-shadow: 
+    2px 2px 4px rgba(0,0,0,0.2),  /* depth */
+    0 0 6px rgba(255, 223, 128, 0.3); /* soft dreamy glow */
   }
-  to {
-    transform: rotate(360deg);
-  }
+  
+h2{
+  color: #7a5230; /* secondary title */
+  font-size: 2rem;
+  font-weight: 500;
+  margin-bottom: 20px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+h3 {
+  color: #8b5e3c; /* sub-section or cards */
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+.board-selector {
+  background-color: #f4f0e6;      /* subtle board background */
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);  /* soft depth */
+  display: flex;
+  flex-direction: column;
+  gap: 16px;                      /* space between title and board list */
 }
 
-.card {
-  padding: 2em;
+/* Board selector title */
+.board-selector h3 {
+  font-family: 'Cormorant Garamond', Georgia, serif; /* storybook font */
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #8b5e3c;                 /* warm brown */
+  margin: 0;
+  text-shadow: 0.5px 0.5px 1px rgba(0,0,0,0.05); /* subtle depth */
+}
+.custom-dropdown {
+  background-color: #fffaf2;
+  border: 1px solid #e0d6c3;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  color: #7a5230;
 }
 
-.read-the-docs {
-  color: #888;
+.custom-dropdown .option {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.custom-dropdown .option:hover {
+  background-color: #f4e3c9;  /* soft golden hover */
 }

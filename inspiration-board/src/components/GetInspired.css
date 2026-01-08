@@ -1,0 +1,36 @@
+button {
+  padding: 10px 14px;           /* Makes the click area larger */
+  border: none;
+  background-color: transparent; /* optional, can add a wood-like bg later */
+  border-radius: 12px;           /* soft corners */
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.1s ease, background-color 0.2s ease;
+}
+
+/* The icon itself */
+.pen-button-icon {
+  width: 225px;     /* slightly larger icon */
+  height: auto;    /* keeps proportions */
+  display: block;
+  
+}
+
+/* Optional hover/active feedback */
+button:hover {
+  background-color: rgba(0, 0, 0, 0.05); /* subtle highlight */
+}
+
+button:active {
+  transform: scale(0.97); /* tactile “press” feel */
+}
+
+.StoryBook{
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.125rem; /* slightly larger than normal */
+  line-height: 1.6;     /* comfortable spacing */
+  color: #7a5230;       /* warm brown */
+  margin-bottom: 16px;
+}

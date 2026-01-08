@@ -13,9 +13,10 @@ const BoardList = ({boards,onSelectBoard}) =>{
         onSelectBoard(selectedBoard);
     };
 
-    return(
+ return(
         <div>
-        <select onChange={handleBoardSelection} defaultValue="">
+        <select onChange={handleBoardSelection} defaultValue=""
+        className='story-dropdown'>
             <option value="" disabled>
             Select a board…
             </option>
@@ -25,7 +26,7 @@ const BoardList = ({boards,onSelectBoard}) =>{
         </select>
         </div>
         );
-};
+}; 
 
 BoardList.propTypes={
     boards: PropTypes.arrayOf(

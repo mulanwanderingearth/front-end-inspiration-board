@@ -1,11 +1,11 @@
+
 .card_content {
     width: 220px;
     min-height: 180px;
-    padding: 1rem;
-    background: #fff9a8; /* classic post-it yellow */
+    padding: 2rem 1rem 1rem 1rem; /* extra top padding to make room for delete button */
+    background: #F7E4E2;
     border-radius: 4px;
-    box-shadow:
-    2px 2px 6px rgba(0, 0, 0, 0.25);
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.25);
     transform: rotate(-1.5deg);
     position: relative;
     font-family: 'Comic Sans MS', 'Segoe UI', sans-serif;
@@ -16,7 +16,6 @@
 
     transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
-
 .card_content:hover {
     transform: rotate(0deg) scale(1.03);
     box-shadow:
@@ -31,21 +30,21 @@
     right: 0;
     width: 30px;
     height: 30px;
-    background: #f0e68c;
+    background: #CBAAA3;
     clip-path: polygon(0 100%, 100% 0, 100% 100%);
     box-shadow: -2px -2px 4px rgba(0, 0, 0, 0.15);
 }
 
 .card_message {
-    color:black;
+    color: black;
     font-size: 1.1rem;
-    margin-bottom: 0.5rem;
+    margin: 5rem 0 0.5rem 0; /* top margin pushes it down from the delete button */
     word-wrap: break-word;
 }
 
 /* Likes text */
 .card_content p {
-    color: pink;
+    color: rgb(125, 55, 67);
     margin: 0.5rem 0;
     font-size: 0.9rem;
 }
