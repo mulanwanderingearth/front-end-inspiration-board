@@ -16,8 +16,9 @@
 .card_message {
     font-size: 1rem;
     color: var(--primary); /* same as "Like" button */
-    margin-bottom: 0.5rem;
+    
 }
+
 
 /* Buttons container (Like, Delete, Total Likes) */
 .card_actions {

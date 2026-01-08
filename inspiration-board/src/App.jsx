@@ -300,11 +300,7 @@ return (
           boards={boards}
           onSelectBoard={handleSelectBoard}
         />
-        <div>
-        <DeleteBoardBtn
-        onDeleteOneBoard={handleDeleteOneBoard}
-        onDeleteAllBoards={handleDeleteAllBoards}/>
-        </div>
+       
         <div className="board-card-feed">
           {selectedBoard && (<SelectedBoard
           boardTitle={selectedBoard.boardTitle}
@@ -316,6 +312,11 @@ return (
             onDeleteCard={deleteCard}
           />
         </div>
+        
+        <DeleteBoardBtn
+        onDeleteOneBoard={handleDeleteOneBoard}
+        onDeleteAllBoards={handleDeleteAllBoards}
+        />
       </section>
 
       {/* MIDDLE COLUMN — Forms */}
@@ -348,6 +349,7 @@ return (
         inspirationStory={inspirationStory}
         loading={loading}
           />
+        
         </div>
         )}
       </section>

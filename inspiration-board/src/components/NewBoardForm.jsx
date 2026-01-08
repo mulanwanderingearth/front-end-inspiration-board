@@ -29,7 +29,7 @@ const NewBoardForm = ({ onNewBoard }) => {
   };
   return (
     <form onSubmit={handleSubmit}>
-      <h1>CREAT A NEW BOARD</h1>
+      <h1>CREATE NEW BOARD</h1>
       <div className={showForm ? 'form-visible' : 'form-hidden'}>
         <label htmlFor="boardTitle"> Title </label>
         <input

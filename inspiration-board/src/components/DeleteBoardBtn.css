@@ -1,0 +1,47 @@
+.delete-board-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 2rem;
+  
+}
+
+
+/* Base button style (matches Add to Board) */
+.delete-btn {
+  width: 80%;
+  padding: 1rem;
+
+  border-radius: 16px;
+  border: none;
+
+  font-family: 'Playfair Display', serif;
+  font-size: 0.9rem;
+
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+
+
+.delete-btn-single {
+  background: #b68dd6;
+  color: white;
+}
+
+.delete-btn-single:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Delete ALL boards — danger variant */
+.delete-btn-all {
+  background: #a64545;
+  color: white;
+}
+
+.delete-btn-all:hover {
+  background: #8f3939;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+}

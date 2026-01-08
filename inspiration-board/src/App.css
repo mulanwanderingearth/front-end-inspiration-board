@@ -1,3 +1,25 @@
+
+:root {
+  --purple-main: #b68dd6;
+  --purple-soft: #cbb3e6;
+  --text-primary: #aaa;
+}
+
+/* Global text defaults */
+body {
+  font-family: 'Inter', sans-serif;
+  color: var(--text-primary);
+  background-color: inherit;
+}
+
+/* Headings */
+h1, h2, h3 {
+  font-family: 'Playfair Display', serif;
+  color: var(--purple-main);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
 /* ===============================
    HEADER
 ================================ */
@@ -81,17 +103,14 @@ input, textarea {
   background: var(--input-background);
   color: var(--text-main);
   font-family: 'Playfair Display', serif;
-  font-size: 1rem;
+  font-size: .8rem;
   outline: none;
   box-sizing: border-box;
   transition: border-color 0.2s, box-shadow 0.2s;
   margin-bottom: 1rem;
 }
 
-textarea#cardMessage {
-  min-height: 180px;
-  resize: none;
-}
+
 
 input:focus,
 textarea:focus {
@@ -137,4 +156,8 @@ input[type="submit"] {
   align-items: center;       /* center horizontally */
   gap: 1rem;                 /* space between text and button */
   text-align: center;        /* center instruction text */
+}
+#cardMessage {
+  min-height: 140px;
+  
 }

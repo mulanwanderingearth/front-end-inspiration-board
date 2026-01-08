@@ -3,9 +3,20 @@ import './DeleteBoardBtn.css';
 
 const DeleteBoardBtn= ({onDeleteOneBoard, onDeleteAllBoards}) => {
 
-    return <section> 
-        <button onClick={onDeleteOneBoard}>delet current board</button>
-        <button onClick={onDeleteAllBoards}>delete all Boards</button>
+    return <section className="delete-board-actions"> 
+        <button 
+        className="delete-btn delete-btn-single" 
+        onClick={onDeleteOneBoard}> 
+
+        Delete Current Board
+        </button>
+
+        <button 
+        className="delete-btn delete-btn-all"
+        onClick={onDeleteAllBoards}> 
+
+        Delete All Boards
+        </button>
     </section>;
 };
 

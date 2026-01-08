@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import './GetInspired.css';
-import starIcon from '../assets/star.png';
+
 
 const GetInspired = ({onGetInspiredButton,inspirationStory,loading}) =>{
     const handleClick = () => {
@@ -18,8 +18,8 @@ const GetInspired = ({onGetInspiredButton,inspirationStory,loading}) =>{
         
         <button className="get-inspired-button" onClick={handleClick}>
             <img
-                src={starIcon}
-                alt="Star Button"
+                src="https://cdn-icons-png.flaticon.com/512/29/29302.png"
+                alt="Book Icon"
                 className="star-button-icon"/>
             <span style={{ marginLeft: '0.5rem', color: '#fff', fontWeight: 500 }}>
                 Generate Story
