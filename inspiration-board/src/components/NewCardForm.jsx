@@ -28,15 +28,16 @@ const NewCardForm = ({ onNewCard }) => {
   return (
     <form onSubmit={handleSubmit}>
       <h1>CREAT A NEW CARD</h1>
-      <label htmlFor="cardMessage">Message</label>
-      <input
+      <label htmlFor="cardMessage"> Message </label>
+      <textarea
         id="cardMessage"
         name="cardMessage"
         value={cardData.cardMessage}
         onChange={handleChange}
         className={isValidInput(cardData.cardMessage) ? 'valid' : 'invalid'}
+        placeholder="Share your inspiration, dreams, or a magical moment..."
       />
-      <p>Preview:{cardData.cardMessage}</p>
+      <p>Preview: {cardData.cardMessage}</p>
       <input
         type="submit"
         value="Add Card"

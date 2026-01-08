@@ -31,30 +31,34 @@ const NewBoardForm = ({ onNewBoard }) => {
     <form onSubmit={handleSubmit}>
       <h1>CREAT A NEW BOARD</h1>
       <div className={showForm ? 'form-visible' : 'form-hidden'}>
-        <label htmlFor="boardTitle">Title</label>
+        <label htmlFor="boardTitle"> Title </label>
         <input
           id="boardTitle"
           name="boardTitle"
           value={boardData.boardTitle}
           onChange={handleChange}
           className={isValidInput(boardData.boardTitle) ? 'Valid' : 'invalid'}
+          placeholder="Once Upon A Time"
+
         />
-        <label htmlFor="ownerNmae">Owner's Name</label>
+        <label htmlFor="ownerNmae"> Owner's Name </label>
         <input
           id="ownerName"
           name="ownerName"
           value={boardData.ownerName}
           onChange={handleChange}
           className={isValidInput(boardData.ownerName) ? 'Valid' : 'invalid'}
+          placeholder="Enter your Name"
         />
-        <p>Preview:{boardData.boardTitle}-{boardData.ownerName}</p>
+        <p>Preview: {boardData.boardTitle}-{boardData.ownerName}</p>
         <input
           type="submit"
           value="Add Board"
           disabled={!(isValidInput(boardData.ownerName) && isValidInput(boardData.boardTitle))}
         />
       </div>
-      <button type="button" onClick={handleHideForm}>{showForm ? 'Hide New Board Form' : 'Show New Board'}</button>
+      
+      <button id="toggle-board-form" type="button" onClick={handleHideForm}>{showForm ? 'Hide New Board Form' : 'Show New Board'}</button>
     </form>
   )
 };
