@@ -14,6 +14,7 @@ const NewCardForm = ({ onNewCard }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+  
     onNewCard(cardData);
     setCardData({
       cardMessage: '',
@@ -21,9 +22,9 @@ const NewCardForm = ({ onNewCard }) => {
     });
   };
 
-  const isValidInput = (input) => {
-    return input.length > 0 && input.length <= 40
-  };
+  // const isValidInput = (input) => {
+  //   return input.length > 0 && input.length <= 40
+  // };
 
   return (
     <form onSubmit={handleSubmit}>
@@ -35,14 +36,14 @@ const NewCardForm = ({ onNewCard }) => {
         name="cardMessage"
         value={cardData.cardMessage}
         onChange={handleChange}
-        className={isValidInput(cardData.cardMessage) ? 'valid' : 'invalid'}
+        // className={isValidInput(cardData.cardMessage) ? 'valid' : 'invalid'}
         placeholder="Share your inspiration, dreams, or a magical moment..."
       />
       <p>Preview: {cardData.cardMessage}</p>
       <input
         type="submit"
         value="Add Card"
-        disabled={!isValidInput(cardData.cardMessage)}
+        // disabled={!isValidInput(cardData.cardMessage)}
       />
     </form>
   )

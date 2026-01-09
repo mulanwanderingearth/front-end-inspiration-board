@@ -1,0 +1,10 @@
+/* Input validation styles */
+.valid {
+  border: 2px solid #5a4a3a;
+  background-color: #f5f5f5;
+}
+
+.invalid {
+  border: 2px solid ridge;
+  background-color: #fff;
+}

@@ -24,11 +24,12 @@ const NewBoardForm = ({ onNewBoard }) => {
     setShowForm(!showForm);
   };
 
-  const isValidInput = (input) => {
-    return input.length > 0 && input.length <= 40
-  };
+  // const isValidInput = (input) => {
+  //   return input.length > 0 && input.length <= 40
+  // };
   return (
-    <form onSubmit={handleSubmit}>
+    <>
+    <form id="boardForm" name="boardForm" onSubmit={handleSubmit}>
       <h1>CREATE NEW BOARD</h1>
       <div className={showForm ? 'form-visible' : 'form-hidden'}>
         <label htmlFor="boardTitle"> Title </label>
@@ -38,7 +39,7 @@ const NewBoardForm = ({ onNewBoard }) => {
           name="boardTitle"
           value={boardData.boardTitle}
           onChange={handleChange}
-          className={isValidInput(boardData.boardTitle) ? 'Valid' : 'invalid'}
+          // className={isValidInput(boardData.boardTitle) ? 'Valid' : 'invalid'}
           placeholder="Once Upon A Time"
 
         />
@@ -49,19 +50,22 @@ const NewBoardForm = ({ onNewBoard }) => {
           name="ownerName"
           value={boardData.ownerName}
           onChange={handleChange}
-          className={isValidInput(boardData.ownerName) ? 'Valid' : 'invalid'}
+          // className={isValidInput(boardData.ownerName) ? 'Valid' : 'invalid'}
           placeholder="Enter your Name"
         />
         <p>Preview: {boardData.boardTitle}-{boardData.ownerName}</p>
         <input
           type="submit"
+          id="submitBoard"
+          name="submitBoard"
           value="Add Board"
-          disabled={!(isValidInput(boardData.ownerName) && isValidInput(boardData.boardTitle))}
         />
       </div>
       
-      <button id="toggle-board-form" type="button" onClick={handleHideForm}>{showForm ? 'Hide New Board Form' : 'Show New Board'}</button>
+     
     </form>
+    <button id="toggle-board-form" type="button" onClick={handleHideForm}>{showForm ? 'Hide New Board Form' : 'Show New Board'}</button>
+    </>
   )
 };
 

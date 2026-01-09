@@ -73,8 +73,8 @@ const addNewCardApi = (cardData, boardId) => {
 // AI function to back end
 const postPromptToAPI = (prompt) => {
   return axios.post(`${VITE_APP_BACKEND_URL}/cards/get_inspired`, {
-      messages: prompt
-    })
+    messages: prompt
+  })
     .then(response => {
       return response.data.text;
     })
@@ -108,15 +108,15 @@ const changLiketoAPI = (changeLikeCardID, newLikes) => {
 
 // board deletion function to back end
 
-const deleteOneBoardAPI = (deleteBoardID) =>{
-    return axios.delete(`${VITE_APP_BACKEND_URL}/boards/${deleteBoardID}`)
+const deleteOneBoardAPI = (deleteBoardID) => {
+  return axios.delete(`${VITE_APP_BACKEND_URL}/boards/${deleteBoardID}`)
     .catch(err => {
       console.log(err);
       throw new Error(`Error deleting board ${deleteBoardID}`);
     })
 };
 
-const deleteAllBoardsAPI =() =>{
+const deleteAllBoardsAPI = () => {
   return axios.delete(`${VITE_APP_BACKEND_URL}/boards`)
     .catch(err => {
       console.log(err);
@@ -153,8 +153,9 @@ function App() {
 
   //new Board submission
   const addNewBoard = (boardData) => {
-    
+
     if (!boardData.boardTitle || !boardData.ownerName) {
+      alert('Please fill in the board title and owner name');
       console.log('Board title and owner name are required');
       return;
     }
@@ -168,11 +169,20 @@ function App() {
 
   // new card submission
   const addNewCard = (cardData) => {
-    if (!selectedBoard) {
-      alert('Please select a Board');
-      console.log('No board selected');
-      // return ;
+    if (!cardData.cardMessage || cardData.cardMessage.trim() === '') {
+      alert('Please enter a card message');
+      return;
     }
+    if (cardData.cardMessage.length > 40) {
+      alert('Card message cannot exceed 40 characters');
+      return;
+    }
+    if (!selectedBoard) {
+      alert('Please select a board first');
+      console.log('No board selected');
+      return;
+    }
+
     addNewCardApi(cardData, selectedBoard.boardId)
       .then(response => {
         const convertedNewCard = convertCardFromApi(response);
@@ -251,112 +261,112 @@ function App() {
         setLoading(false);
       });
   };
-  
+
   // New delete board buttons funcitons
   const handleDeleteOneBoard = () => {
-  if (!selectedBoard) return; // safety check
+    if (!selectedBoard) return; // safety check
 
-  deleteOneBoardAPI(selectedBoard.boardId)
-    .then(() => {
-      setBoards(prevBoards =>
-        prevBoards.filter(board => board.boardId !== selectedBoard.boardId)
-      );
-      setSelectedBoard(null);
-    })
-    .catch(err => console.log(err.message));
+    deleteOneBoardAPI(selectedBoard.boardId)
+      .then(() => {
+        setBoards(prevBoards =>
+          prevBoards.filter(board => board.boardId !== selectedBoard.boardId)
+        );
+        setSelectedBoard(null);
+      })
+      .catch(err => console.log(err.message));
   };
 
-  const handleDeleteAllBoards =() =>{
+  const handleDeleteAllBoards = () => {
     deleteAllBoardsAPI()
-    .then(() => {
-      setBoards([]);
-      setSelectedBoard(null);
-    })
-    .catch(err => console.log(err.message));
+      .then(() => {
+        setBoards([]);
+        setSelectedBoard(null);
+      })
+      .catch(err => console.log(err.message));
   };
 
-return (
-  <div className="app-root">
-    
-    {/* Header */}
-    <header className="app-header">
-      <div className="header-inner">
-        <h1 className="app-title">✨ Inspiration Board ✨</h1>
-      </div>
-    </header>
+  return (
+    <div className="app-root">
 
-    {/* 3-column layout */}
-    <main className="three-column-layout">
-
-
-      {/* LEFT COLUMN — Boards + Cards */}
-      <section className="layout-column layout-column-left">
-        <div className="board-panel-header">
-          <h2 className="panel-title">My Board</h2>
-          <p className="panel-subtitle">A collection of magical moments</p>
+      {/* Header */}
+      <header className="app-header">
+        <div className="header-inner">
+          <h1 className="app-title">✨ Inspiration Board ✨</h1>
         </div>
+      </header>
 
-        <BoardList
-          boards={boards}
-          onSelectBoard={handleSelectBoard}
-        />
-       
-        <div className="board-card-feed">
-          {selectedBoard && (<SelectedBoard
-          boardTitle={selectedBoard.boardTitle}
-          author={selectedBoard.ownerName}
-        />)}
-          <Board
-            cards={cards}
-            onToggleLikes={pressLikes}
-            onDeleteCard={deleteCard}
+      {/* 3-column layout */}
+      <main className="three-column-layout">
+
+
+        {/* LEFT COLUMN — Boards + Cards */}
+        <section className="layout-column layout-column-left">
+          <div className="board-panel-header">
+            <h2 className="panel-title">My Board</h2>
+            <p className="panel-subtitle">A collection of magical moments</p>
+          </div>
+
+          <BoardList
+            boards={boards}
+            onSelectBoard={handleSelectBoard}
           />
-        </div>
-        
-        <DeleteBoardBtn
-        onDeleteOneBoard={handleDeleteOneBoard}
-        onDeleteAllBoards={handleDeleteAllBoards}
-        />
-      </section>
 
-      {/* MIDDLE COLUMN — Forms */}
-      <section className="layout-column layout-column-middle">
-        <div className="form-panel">
-          <h2 className="panel-title">Write Your Story</h2>
+          <div className="board-card-feed">
+            {selectedBoard && (<SelectedBoard
+              boardTitle={selectedBoard.boardTitle}
+              author={selectedBoard.ownerName}
+            />)}
+            <Board
+              cards={cards}
+              onToggleLikes={pressLikes}
+              onDeleteCard={deleteCard}
+            />
+          </div>
+
+          <DeleteBoardBtn
+            onDeleteOneBoard={handleDeleteOneBoard}
+            onDeleteAllBoards={handleDeleteAllBoards}
+          />
+        </section>
+
+        {/* MIDDLE COLUMN — Forms */}
+        <section className="layout-column layout-column-middle">
+          <div className="form-panel">
+            <h2 className="panel-title">Write Your Story</h2>
             <p className="panel-subtitle">
-            Share your magical inspiration with the world
+              Share your magical inspiration with the world
             </p>
-          <NewBoardForm onNewBoard={addNewBoard} />
-        </div>
+            <NewBoardForm onNewBoard={addNewBoard} />
+          </div>
 
-        <div className="form-panel">
-        
-          <NewCardForm onNewCard={addNewCard} />
-        </div>
-      </section>
+          <div className="form-panel">
 
-      {/* RIGHT COLUMN — Selected Board + AI */}
-      <section className="column right-column">
-        {selectedBoard && (
-          <div className="story-panel-content">  {/* unified bubble */}
-      <div className="story-panel-header">
-        <h2>Generated Story</h2>
-        <p className="panel-subtitle"></p>
-      </div>
+            <NewCardForm onNewCard={addNewCard} />
+          </div>
+        </section>
 
-      <GetInspired
-        onGetInspiredButton={handleGetInspired}
-        inspirationStory={inspirationStory}
-        loading={loading}
-          />
-        
-        </div>
-        )}
-      </section>
+        {/* RIGHT COLUMN — Selected Board + AI */}
+        <section className="column right-column">
+          {selectedBoard && (
+            <div className="story-panel-content">  {/* unified bubble */}
+              <div className="story-panel-header">
+                <h2>Generated Story</h2>
+                <p className="panel-subtitle"></p>
+              </div>
 
-    </main>
-  </div>
-);
+              <GetInspired
+                onGetInspiredButton={handleGetInspired}
+                inspirationStory={inspirationStory}
+                loading={loading}
+              />
+
+            </div>
+          )}
+        </section>
+
+      </main>
+    </div>
+  );
 
 }
 
